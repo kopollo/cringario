@@ -12,10 +12,10 @@ timer = pygame.time.Clock()
 class GameManager:
     def _draw_frame(self, screen):
         screen.fill('#123456')
-        w = StartWindow(screen)
-        w.render()
-        # level = Level(level_map, screen)
-        # level.run()
+        # w = StartWindow(screen)
+        # w.render()
+        level = Level(level_map, screen)
+        level.run()
         pygame.display.flip()
         timer.tick(60)
 

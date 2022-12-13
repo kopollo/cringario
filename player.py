@@ -1,5 +1,7 @@
 import pygame
 from abc import abstractmethod, ABC
+from drawable import DrawWithSprite
+from cringario_util import load_image
 
 JUMP_POWER = 10
 GRAVITY = 0.35
@@ -15,6 +17,7 @@ class BaseAliveCreature(ABC):
 
     @abstractmethod
     def update(self):
+        pass
 
     @abstractmethod
     def get_damage(self):
@@ -29,25 +32,26 @@ class BaseAliveCreature(ABC):
         pass
 
 
-class Hero(BaseAliveCreature):
-    def __init__(self, x, y):
-        self.startX = x  # Начальная позиция Х
+class Hero():
+    image = load_image("bomb.png")
+
+    def __init__(self, pos):
+        x, y = pos
+        self.startX = x
         self.startY = y
+        self.view = DrawWithSprite(pos, 50, Hero.image)
         self.direction = pygame.math.Vector2(0, 0)
         self.speed = 5
         self.jump_speed = -13
         self.gravity = 0.6
-
 
     def player_move(self):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_RIGHT]:
             self.direction.x += 1
-
-        if keys[pygame.K_LEFT]:
+        elif keys[pygame.K_LEFT]:
             self.direction.x -= 1
-
         else:
             self.direction.x = 0
 
@@ -61,4 +65,3 @@ class Hero(BaseAliveCreature):
         self.player_move()
         self.gravity_work()
         return (self.direction.x * self.speed, self.direction.y)
-

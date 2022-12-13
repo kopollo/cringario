@@ -21,7 +21,6 @@ class StartWindow(BaseWindow):
         self.buttons = []
         self.display = screen
 
-
     def render(self):
         self.menu.draw(self.display)
         pass

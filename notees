@@ -20,4 +20,4 @@ level_map = [
     "-                       -",
     "-------------------------"
 ]
-platform_size = 30
+platform_size = 25

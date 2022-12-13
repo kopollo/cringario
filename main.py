@@ -4,7 +4,7 @@ from level_init import Level
 from levels.test_level import level_map
 from drawable import *
 from cringario_util import load_image
-
+from window_objects.windows import StartWindow
 WINDOW_SIZE = 800, 700
 timer = pygame.time.Clock()
 
@@ -12,8 +12,10 @@ timer = pygame.time.Clock()
 class GameManager:
     def _draw_frame(self, screen):
         screen.fill('#123456')
-        level = Level(level_map, screen)
-        level.run()
+        w = StartWindow(screen)
+        w.render()
+        # level = Level(level_map, screen)
+        # level.run()
         pygame.display.flip()
         timer.tick(60)
 

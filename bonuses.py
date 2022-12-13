@@ -20,15 +20,15 @@ class BaseBonus(ABC):
         pass
 
 
-class HealBonus():
+class HealBonus(DrawWithSprite):
     BONUS_HP = 1
     BONUS_SCORE = 50
     image = load_image("cat.png")
 
     def __init__(self, pos, size):
+        super().__init__(pos, size, HealBonus.image)
         self.hp = HealBonus.BONUS_HP
         self.score = HealBonus.BONUS_SCORE
-        self.view = DrawWithSprite(pos, size, HealBonus.image)
 
     def is_collected(self):
         pass

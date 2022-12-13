@@ -32,36 +32,36 @@ class BaseAliveCreature(ABC):
         pass
 
 
-class Hero():
+class Hero(DrawWithSprite):
     image = load_image("bomb.png")
 
-    def __init__(self, pos):
+    def __init__(self, pos, size):
+        super().__init__(pos, size, Hero.image)
         x, y = pos
-        self.startX = x
-        self.startY = y
-        self.view = DrawWithSprite(pos, 50, Hero.image)
-        self.direction = pygame.math.Vector2(0, 0)
-        self.speed = 5
+        self.speed = 10
         self.jump_speed = -13
         self.gravity = 0.6
 
+        self.view = DrawWithSprite(pos, 50, Hero.image)
+        self.direction = pygame.math.Vector2(0, 0)
+
     def player_move(self):
         keys = pygame.key.get_pressed()
-
         if keys[pygame.K_RIGHT]:
-            self.direction.x += 1
+            self.direction.x = 1
         elif keys[pygame.K_LEFT]:
-            self.direction.x -= 1
+            self.direction.x = -1
         else:
             self.direction.x = 0
 
     def jump(self):
         self.direction.y = self.jump_speed
-
-    def gravity_work(self):
-        self.direction.y += self.gravity
+    # def gravity_work(self):
+    #     self.direction.y += self.gravity
 
     def update(self):
         self.player_move()
-        self.gravity_work()
-        return (self.direction.x * self.speed, self.direction.y)
+        self.rect.x += self.direction.x * self.speed
+        # self.gravity_work()
+        # self.view.direction.x = * self.speed
+        # self.direction.y)

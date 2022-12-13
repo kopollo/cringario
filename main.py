@@ -1,8 +1,8 @@
 import pygame
 
+from drawable import *
 from level_init import Level
 from levels.test_level import level_map
-from drawable import *
 from cringario_util import load_image
 
 WINDOW_SIZE = 800, 700

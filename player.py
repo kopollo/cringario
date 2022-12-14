@@ -37,31 +37,27 @@ class Hero(DrawWithSprite):
 
     def __init__(self, pos, size):
         super().__init__(pos, size, Hero.image)
-        x, y = pos
-        self.speed = 10
+        self.speed = 9
         self.jump_speed = -13
         self.gravity = 0.6
-
-        self.view = DrawWithSprite(pos, 50, Hero.image)
         self.direction = pygame.math.Vector2(0, 0)
 
     def player_move(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_d]:
             self.direction.x = 1
-        elif keys[pygame.K_LEFT]:
+        elif keys[pygame.K_a]:
             self.direction.x = -1
         else:
             self.direction.x = 0
 
     def jump(self):
         self.direction.y = self.jump_speed
-    # def gravity_work(self):
-    #     self.direction.y += self.gravity
+
+    def gravity_work(self):
+        self.direction.y += self.gravity
 
     def update(self):
-        self.player_move()
         self.rect.x += self.direction.x * self.speed
-        # self.gravity_work()
-        # self.view.direction.x = * self.speed
-        # self.direction.y)
+        self.player_move()
+        self.gravity_work()

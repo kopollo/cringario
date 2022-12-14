@@ -21,3 +21,4 @@ level_map = [
     "-------------------------"
 ]
 platform_size = 30
+screen_width = 800

@@ -19,10 +19,10 @@ class GameManager:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                screen.fill('#123456')
-                level.run()
-                pygame.display.flip()
-                timer.tick(60)
+            screen.fill('#123456')
+            level.run()
+            pygame.display.flip()
+            timer.tick(60)
 
     def run(self):
         screen = pygame.display.set_mode(WINDOW_SIZE)

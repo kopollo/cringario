@@ -54,12 +54,41 @@ class Level:
             self.world_shift = 0
             player.speed = 8
 
+    def horizontal_movement_collision(self):
+        player = self.player.sprite
+        player.rect.x += player.direction.x * player.speed
+
+        for sprite in self.platforms.sprites():
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.x < 0:
+                    player.rect.left = sprite.rect.right
+                elif player.direction.x > 0:
+                    player.rect.right = sprite.rect.left
+
+    def vertical_movement_collision(self):
+        player = self.player.sprite
+        player.gravity_work()
+
+        for sprite in self.platforms.sprites():
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.y > 0:
+                    player.rect.bottom = sprite.rect.top
+                elif player.direction.y < 0:
+                    player.rect.top = sprite.rect.bottom
+
+
+
+
+
     def run(self):
+        self.player.update()
         self.bonuses.draw(self.display)
         # self.fon.draw(self.display)
         self.platforms.draw(self.display)
-        self.player.update()
         self.player.draw(self.display)
 
         self.scroll_x()
         self.platforms.update(self.world_shift)
+
+        self.horizontal_movement_collision()
+        self.vertical_movement_collision()

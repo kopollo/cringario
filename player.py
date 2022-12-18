@@ -37,9 +37,9 @@ class Hero(DrawWithSprite):
 
     def __init__(self, pos, size):
         super().__init__(pos, size, Hero.image)
-        self.speed = 9
-        self.jump_speed = -13
-        self.gravity = 0.6
+        self.speed = 4
+        self.jump_speed = -5
+        self.gravity = 0.3
         self.direction = pygame.math.Vector2(0, 0)
 
     def player_move(self):
@@ -50,14 +50,15 @@ class Hero(DrawWithSprite):
             self.direction.x = -1
         else:
             self.direction.x = 0
+        if keys[pygame.K_w]:
+            self.jump()
 
     def jump(self):
         self.direction.y = self.jump_speed
 
     def gravity_work(self):
         self.direction.y += self.gravity
+        self.rect.y += self.direction.y
 
     def update(self):
-        self.rect.x += self.direction.x * self.speed
         self.player_move()
-        self.gravity_work()

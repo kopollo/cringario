@@ -34,12 +34,15 @@ class BaseAliveCreature(ABC):
 
 class Hero(DrawWithSprite):
     image = load_image("bomb.png")
+    SPEED = 4
+    JUMP_SPEED = -6
+    GRAVITY = 0.3
 
     def __init__(self, pos, size):
         super().__init__(pos, size, Hero.image)
-        self.speed = 4
-        self.jump_speed = -5
-        self.gravity = 0.3
+        self.speed = Hero.SPEED
+        self.jump_speed = Hero.JUMP_SPEED
+        self.gravity = Hero.GRAVITY
         self.direction = pygame.math.Vector2(0, 0)
 
     def player_move(self):

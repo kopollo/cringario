@@ -18,9 +18,6 @@ class Level:
         self.player = pygame.sprite.GroupSingle()
         self.setup_level(level_map)
 
-        # d = DrawWithSprite((0, 0), 800, load_image("forest.png"))
-        # self.fon = pygame.sprite.Group(d)
-
     def setup_level(self, level_map):
         for row_idx, row in enumerate(level_map):
             for col_idx, cell in enumerate(row):
@@ -33,7 +30,7 @@ class Level:
                     bonus = HealBonus((x, y), platform_size)
                     self.bonuses.add(bonus)
                 elif cell == 'P':
-                    player_sprite = Hero((x, y), 40)
+                    player_sprite = Hero((x, y), 30)
                     self.player.add(player_sprite)
 
     def scroll_x(self):
@@ -68,27 +65,24 @@ class Level:
     def vertical_movement_collision(self):
         player = self.player.sprite
         player.gravity_work()
-
         for sprite in self.platforms.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
+                    player.direction.y = 0
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
-
-
-
-
+                    player.direction.y = 0
 
     def run(self):
         self.player.update()
         self.bonuses.draw(self.display)
-        # self.fon.draw(self.display)
         self.platforms.draw(self.display)
         self.player.draw(self.display)
 
         self.scroll_x()
         self.platforms.update(self.world_shift)
+        self.bonuses.update(self.world_shift)
 
         self.horizontal_movement_collision()
         self.vertical_movement_collision()

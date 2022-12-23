@@ -30,6 +30,9 @@ class HealBonus(DrawWithSprite):
         self.hp = HealBonus.BONUS_HP
         self.score = HealBonus.BONUS_SCORE
 
+    def update(self, shift):
+        self.rect.x += shift
+
     def is_collected(self):
         pass
 

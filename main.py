@@ -11,6 +11,8 @@ timer = pygame.time.Clock()
 
 
 class GameManager:
+    def __init__(self, screen):
+        self.screen = screen
 
     def _game_cycle(self, screen):
         running = True
@@ -25,13 +27,13 @@ class GameManager:
             timer.tick(60)
 
     def run(self):
-        screen = pygame.display.set_mode(WINDOW_SIZE)
-        self._game_cycle(screen)
+        self._game_cycle(self.screen)
 
 
 def main():
     pygame.init()
-    manager = GameManager()
+    screen = pygame.display.set_mode(WINDOW_SIZE)
+    manager = GameManager(screen)
     manager.run()
     pygame.quit()
 

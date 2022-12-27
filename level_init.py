@@ -6,7 +6,7 @@ from tiles import Tile
 from levels.test_level import (
     platform_size, screen_width, screen_height,
     map_height)
-from bonuses import HealBonus
+from bonuses import HealBonus, SimpleBonus
 from player import Hero
 
 
@@ -36,11 +36,14 @@ class Level:
                 if cell == '-':
                     platform = Tile((x, y), platform_size)
                     self.platforms.add(platform)
-                elif cell == 'x':
+                elif cell == 'h':
                     bonus = HealBonus((x, y), platform_size)
                     self.bonuses.add(bonus)
+                elif cell == 's':
+                    bonus = SimpleBonus((x, y), platform_size)
+                    self.bonuses.add(bonus)
                 elif cell == 'P':
-                    player_sprite = Hero((x, y), 30)
+                    player_sprite = Hero((x, y), 40)
                     self.player.add(player_sprite)
 
     def scroll_x(self):
@@ -83,13 +86,23 @@ class Level:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
 
+    def check_bonuses(self):
+        player = self.player.sprite
+        for bonus in self.bonuses:
+            if bonus.rect.colliderect(player.rect):
+                bonus.hide_bonus()
+                bonus.add_bonus(player)
+
     def run(self):
         self.game_fon.draw(self.display)
 
         self.scroll_x()
 
+        self.check_bonuses()
+
         self.bonuses.draw(self.display)
         self.bonuses.update(self.world_shift_x)
+
         self.platforms.update(self.world_shift_x)
         self.platforms.draw(self.display)
 

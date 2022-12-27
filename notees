@@ -42,3 +42,8 @@ def scroll_y(self):
     #     else:
     #         self.world_shift_y = 0
     #         player.gravity = 0.3
+
+
+
+    def __init__(self, level_map, platform_size,
+                 screen_height, map_height, surface, player):

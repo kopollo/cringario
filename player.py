@@ -3,12 +3,9 @@ from abc import abstractmethod, ABC
 from drawable import DrawWithSprite
 from cringario_util import load_image
 
+
 class BaseAliveCreature(ABC):
     def __init__(self, x, y):
-        pass
-
-    @abstractmethod
-    def player_move(self):
         pass
 
     @abstractmethod
@@ -29,7 +26,7 @@ class BaseAliveCreature(ABC):
 
 
 class Hero(DrawWithSprite):
-    image = load_image("bomb.png")
+    image = load_image("frog.png")
     SPEED = 8
     JUMP_SPEED = -15
     GRAVITY = 0.3
@@ -41,6 +38,8 @@ class Hero(DrawWithSprite):
         self.gravity = Hero.GRAVITY
         self.direction = pygame.math.Vector2(0, 0)
 
+        self.score = 0
+        self.hp = 3
         self.in_air = True
 
     def player_move(self):
@@ -61,6 +60,12 @@ class Hero(DrawWithSprite):
     def gravity_work(self):
         self.direction.y += self.gravity
         self.rect.y += self.direction.y
+
+    def add_score(self, score):
+        self.score += score
+
+    def add_hp(self, hp):
+        self.hp += hp
 
     def update(self):
         self.player_move()

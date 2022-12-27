@@ -2,11 +2,11 @@ import pygame
 
 from drawable import *
 from level_init import Level
-from levels.test_level import level_map, screen_width
+from levels.test_level import level_map, screen_width, screen_height
 from cringario_util import load_image
 from window_objects.windows import StartWindow
 
-WINDOW_SIZE = 800, 800
+WINDOW_SIZE = screen_width, screen_height
 timer = pygame.time.Clock()
 
 

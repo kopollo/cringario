@@ -10,6 +10,5 @@ class Tile(DrawWithSprite):
     def __init__(self, pos, size):
         super().__init__(pos, size, Tile.sprite)
 
-    def update(self, shift):
-        self.rect.x += shift
-
+    def update(self, shift_x):
+        self.rect.x += shift_x

@@ -25,7 +25,11 @@ class Level:
         self.player = pygame.sprite.GroupSingle()
         self.setup_level(level_map)
 
-        fon = DrawWithSprite((0, 0), 2000, load_image('secret.png'))
+        fon = DrawWithSprite(
+            (0, 0),
+            (screen_width, screen_height),
+            load_image('mount.png')
+        )
         self.game_fon = pygame.sprite.GroupSingle(fon)
 
     def setup_level(self, level_map):
@@ -34,16 +38,16 @@ class Level:
                 x = col_idx * platform_size
                 y = row_idx * platform_size + screen_height - map_height
                 if cell == '-':
-                    platform = Tile((x, y), platform_size)
+                    platform = Tile((x, y), (platform_size, platform_size))
                     self.platforms.add(platform)
                 elif cell == 'h':
-                    bonus = HealBonus((x, y), platform_size)
+                    bonus = HealBonus((x, y), (platform_size, platform_size))
                     self.bonuses.add(bonus)
                 elif cell == 's':
-                    bonus = SimpleBonus((x, y), platform_size)
+                    bonus = SimpleBonus((x, y), (platform_size, platform_size))
                     self.bonuses.add(bonus)
                 elif cell == 'P':
-                    player_sprite = Hero((x, y), 40)
+                    player_sprite = Hero((x, y), (40, 40))
                     self.player.add(player_sprite)
 
     def scroll_x(self):

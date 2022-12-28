@@ -15,7 +15,8 @@ class DrawWithColor(pygame.sprite.Sprite):
 class DrawWithSprite(pygame.sprite.Sprite):
     def __init__(self, pos, size, image):
         super().__init__()
-        image = pygame.transform.scale(image, (size, size))
+        width, height = size
+        image = pygame.transform.scale(image, (width, height))
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.topleft = pos
@@ -24,9 +25,10 @@ class DrawWithSprite(pygame.sprite.Sprite):
 class DrawWithText(pygame.sprite.Sprite):
     def __init__(self, pos, size, text):
         super().__init__()
+        width, height = size
         font = pygame.font.Font(None, 50)
         self.textSurf = font.render(text, True, (100, 255, 100))
-        self.image = pygame.transform.scale(self.textSurf, (size, size))
+        self.image = pygame.transform.scale(self.textSurf, (width, height))
         self.rect = self.image.get_rect()
         self.rect.topleft = pos
         # self.image.blit(self.textSurf, [W / 2 - W / 2, H / 2 - H / 2])

@@ -1,5 +1,6 @@
 import pygame
 
+from collision import Collision
 from cringario_util import load_image
 from drawable import DrawWithSprite
 from tiles import Tile
@@ -7,7 +8,7 @@ from levels.test_level import (
     platform_size, screen_width, screen_height,
     map_height)
 from bonuses import HealBonus, SimpleBonus
-from player import Hero
+from moving_objects import Hero, Enemy
 
 
 class Camera:
@@ -22,6 +23,7 @@ class Level:
         self.platforms = pygame.sprite.Group()
 
         self.bonuses = pygame.sprite.Group()
+        self.enemies = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
         self.setup_level(level_map)
 
@@ -31,6 +33,9 @@ class Level:
             load_image('mount.png')
         )
         self.game_fon = pygame.sprite.GroupSingle(fon)
+
+        self.player_collision = Collision(self.player, self.platforms)
+        self.enemy_collision = Collision(self.enemies, self.platforms)
 
     def setup_level(self, level_map):
         for row_idx, row in enumerate(level_map):
@@ -46,6 +51,9 @@ class Level:
                 elif cell == 's':
                     bonus = SimpleBonus((x, y), (platform_size, platform_size))
                     self.bonuses.add(bonus)
+                elif cell == 'e':
+                    enemy = Enemy((x, y), (platform_size, platform_size))
+                    self.enemies.add(enemy)
                 elif cell == 'P':
                     player_sprite = Hero((x, y), (40, 40))
                     self.player.add(player_sprite)
@@ -65,30 +73,12 @@ class Level:
         else:
             self.world_shift_x = 0
 
-    def horizontal_movement_collision(self):
+    def check_bonuses(self):
         player = self.player.sprite
-        player.rect.x += player.direction.x * player.speed
-        for sprite in self.platforms.sprites():
-            if sprite.rect.colliderect(player.rect):
-                if player.direction.x < 0:
-                    player.rect.left = sprite.rect.right
-                    player.direction.x = 0
-                elif player.direction.x > 0:
-                    player.rect.right = sprite.rect.left
-                    player.direction.x = 0
-
-    def vertical_movement_collision(self):
-        player = self.player.sprite
-        player.gravity_work()
-        for sprite in self.platforms.sprites():
-            if sprite.rect.colliderect(player.rect):
-                if player.direction.y > 0:
-                    player.rect.bottom = sprite.rect.top
-                    player.direction.y = 0
-                    player.in_air = False
-                elif player.direction.y < 0:
-                    player.rect.top = sprite.rect.bottom
-                    player.direction.y = 0
+        for bonus in self.bonuses:
+            if bonus.rect.colliderect(player.rect):
+                bonus.hide_bonus()
+                bonus.add_bonus(player)
 
     def check_bonuses(self):
         player = self.player.sprite
@@ -107,11 +97,14 @@ class Level:
         self.bonuses.draw(self.display)
         self.bonuses.update(self.world_shift_x)
 
+        self.enemies.draw(self.display)
+        self.enemies.update(self.world_shift_x)
+
         self.platforms.update(self.world_shift_x)
         self.platforms.draw(self.display)
 
-        self.horizontal_movement_collision()
-        self.vertical_movement_collision()
+        self.player_collision.apply()
+        self.enemy_collision.apply()
 
         self.player.draw(self.display)
         self.player.update()

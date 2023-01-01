@@ -35,7 +35,7 @@ class BaseMovingCreature(ABC):
 
 class Hero(DrawWithSprite, BaseMovingCreature):
     image = load_image("frog.png")
-    HERO_HEALTH = 3
+    HERO_HEALTH = 4
 
     def __init__(self, pos, size):
         super().__init__(pos, size, Hero.image)
@@ -44,9 +44,13 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.gravity = Hero.BASE_GRAVITY
         self.direction = pygame.math.Vector2(0, 0)
 
+        self.spawn_point = pos
         self.score = 0
         self.hp = Hero.HERO_HEALTH
         self.in_air = True
+        self.is_invincible = True
+        self.invincible_duration = 500
+        self.hurt_time = 0
 
     def keyboard_checker(self):
         keys = pygame.key.get_pressed()
@@ -66,23 +70,30 @@ class Hero(DrawWithSprite, BaseMovingCreature):
     def add_hp(self, hp):
         self.hp += hp
 
+    def relocate_to(self, pos):
+        self.rect.topleft = pos
+
+    def is_dead(self):
+        if self.hp <= 0:
+            return True
+        return False
+
+    def get_damaged(self, enemy):
+        if not self.is_invincible:
+            self.is_invincible = True
+            self.hp -= enemy.ENEMY_DAMAGE
+            self.hurt_time = pygame.time.get_ticks()
+            if not self.is_dead():
+                self.jump()
+
+    def invincibility_checker(self):
+        if self.is_invincible:
+            cur_time = pygame.time.get_ticks()
+            if cur_time - self.hurt_time >= self.invincible_duration:
+                self.is_invincible = False
+
     def update(self):
         self.keyboard_checker()
-
-
-class Enemy(DrawWithSprite, BaseMovingCreature):
-    image = load_image("bad.png")
-    ENEMY_SPEED = 5
-    ENEMY_JUMP_SPEED = 0
-
-    def __init__(self, pos, size):
-        super().__init__(pos, size, Enemy.image)
-        self.speed = Enemy.ENEMY_SPEED
-        self.jump_speed = Enemy.ENEMY_JUMP_SPEED
-        self.gravity = Enemy.BASE_GRAVITY
-        self.direction = pygame.math.Vector2(0, 0)
-
-        self.direction.x = 1
-
-    def update(self, shift_x):
-        self.rect.x += shift_x
+        self.invincibility_checker()
+        if self.direction.y >= 1:
+            self.in_air = True

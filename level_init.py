@@ -3,12 +3,13 @@ import pygame
 from collision import Collision
 from cringario_util import load_image
 from drawable import DrawWithSprite
+from enemy import Enemy
 from tiles import Tile
 from levels.test_level import (
     platform_size, screen_width, screen_height,
     map_height)
 from bonuses import HealBonus, SimpleBonus
-from moving_objects import Hero, Enemy
+from player import Hero
 
 
 class Camera:
@@ -18,7 +19,7 @@ class Camera:
 class Level:
     def __init__(self, level_map, surface):
         self.world_shift_x = 0
-        self.world_shift_y = 0
+        self.total_shift_x = 0
         self.display = surface
         self.platforms = pygame.sprite.Group()
 
@@ -66,33 +67,43 @@ class Level:
         if player_x < camera_bound and direction_x < 0:
             self.world_shift_x = 8
             player.rect.x += camera_bound - player_x
+            self.total_shift_x += 8
 
         elif player_x > screen_width - camera_bound and direction_x > 0:
             self.world_shift_x = -8
             player.rect.x -= player_x - (screen_width - camera_bound)
+            self.total_shift_x -= 8
         else:
             self.world_shift_x = 0
 
-    def check_bonuses(self):
+    def check_bonuses_collision(self):
         player = self.player.sprite
         for bonus in self.bonuses:
             if bonus.rect.colliderect(player.rect):
                 bonus.hide_bonus()
                 bonus.add_bonus(player)
 
-    def check_bonuses(self):
+    def check_enemies_collision(self):
         player = self.player.sprite
-        for bonus in self.bonuses:
-            if bonus.rect.colliderect(player.rect):
-                bonus.hide_bonus()
-                bonus.add_bonus(player)
+        for enemy in self.enemies:
+            if enemy.rect.colliderect(player.rect):
+                player.get_damaged(enemy)
+
+    def check_player_state(self):
+        player = self.player.sprite
+        if player.is_dead():
+            player.hp = player.HERO_HEALTH
+            player.relocate_to(player.spawn_point)
+            self.world_shift_x -= self.total_shift_x
+            self.total_shift_x = 0
 
     def run(self):
         self.game_fon.draw(self.display)
+        self.check_player_state()
+        # print(self.total_shift_x)
 
-        self.scroll_x()
-
-        self.check_bonuses()
+        self.check_bonuses_collision()
+        self.check_enemies_collision()
 
         self.bonuses.draw(self.display)
         self.bonuses.update(self.world_shift_x)
@@ -108,3 +119,5 @@ class Level:
 
         self.player.draw(self.display)
         self.player.update()
+
+        self.scroll_x()

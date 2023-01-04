@@ -5,9 +5,7 @@ from cringario_util import load_image
 from drawable import DrawWithSprite
 from enemy import Enemy
 from tiles import Tile
-from levels.test_level import (
-    platform_size, screen_width, screen_height,
-    map_height)
+# from levels.test_level import ( screen_width, screen_height, map_height)
 from bonuses import HealBonus, SimpleBonus
 from player import Hero
 
@@ -17,11 +15,20 @@ class Camera:
 
 
 class Level:
-    def __init__(self, level_map, surface):
+    def __init__(
+            self,level_map, surface,
+            platform_size, screen_width, screen_height, map_height, player
+    ):
         self.world_shift_x = 0
         self.total_shift_x = 0
         self.display = surface
         self.platforms = pygame.sprite.Group()
+        self.player_sprite = player
+
+        self.platform_size = platform_size
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.map_height = map_height
 
         self.bonuses = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
@@ -39,10 +46,11 @@ class Level:
         self.enemy_collision = Collision(self.enemies, self.platforms)
 
     def setup_level(self, level_map):
+        platform_size = self.platform_size
         for row_idx, row in enumerate(level_map):
             for col_idx, cell in enumerate(row):
                 x = col_idx * platform_size
-                y = row_idx * platform_size + screen_height - map_height
+                y = row_idx * platform_size + self.screen_height - self.map_height
                 if cell == '-':
                     platform = Tile((x, y), (platform_size, platform_size))
                     self.platforms.add(platform)
@@ -56,13 +64,16 @@ class Level:
                     enemy = Enemy((x, y), (platform_size, platform_size))
                     self.enemies.add(enemy)
                 elif cell == 'P':
-                    player_sprite = Hero((x, y), (30, 30))
-                    self.player.add(player_sprite)
+                    # player_sprite = Hero((x, y), (30, 30))
+                    self.player_sprite.relocate_to((x, y))
+                    self.player_sprite.spawn_point = (x, y)
+                    self.player.add(self.player_sprite)
 
     def scroll_x(self):
         player = self.player.sprite
         player_x = player.rect.centerx
         direction_x = player.direction.x
+        screen_width = self.screen_width
         camera_bound = screen_width / 6
         if player_x < camera_bound and direction_x < 0:
             self.world_shift_x = 8

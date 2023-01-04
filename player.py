@@ -38,7 +38,7 @@ class BaseMovingCreature(ABC):
 class Hero(DrawWithSprite, BaseMovingCreature):
     HERO_HEALTH = 4
 
-    def __init__(self, pos, size):
+    def __init__(self, pos, size, controller):
         self.speed = Hero.BASE_SPEED
         self.jump_speed = Hero.BASE_JUMP_SPEED
         self.gravity = Hero.BASE_GRAVITY
@@ -52,6 +52,7 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.invincible_duration = 500
         self.hurt_time = 0
         self.size = size
+        self.controller = controller
 
         self.animations = {'idle': [], 'run': [], 'jump': [], 'fall': []}
         self.download_hero_asset()
@@ -90,13 +91,14 @@ class Hero(DrawWithSprite, BaseMovingCreature):
 
     def keyboard_checker(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_d]:
+        controller = self.controller
+        if keys[controller['right']]:
             self.direction.x = 1
-        elif keys[pygame.K_a]:
+        elif keys[controller['left']]:
             self.direction.x = -1
         else:
             self.direction.x = 0
-        if keys[pygame.K_w] and not self.in_air:
+        if keys[controller['up']] and not self.in_air:
             self.jump()
             self.in_air = True
 

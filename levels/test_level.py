@@ -33,7 +33,5 @@ level_map = [
     "-------------------------------------------------------------"
 ]
 platform_size = 40
-screen_width = 1200
 map_height = platform_size * len(level_map)
-screen_height = 800
 

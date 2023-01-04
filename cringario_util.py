@@ -10,4 +10,5 @@ def load_image(name, colorkey=None):
         print(f"Файл с изображением '{fullname}' не найден")
         sys.exit()
     image = pygame.image.load(fullname)
+
     return image

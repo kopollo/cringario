@@ -5,6 +5,7 @@ from drawable import DrawWithSprite
 from cringario_util import load_image
 from import_folder import import_folder
 
+
 class BaseMovingCreature(ABC):
     BASE_SPEED = 8
     BASE_JUMP_SPEED = -15
@@ -35,20 +36,9 @@ class BaseMovingCreature(ABC):
 
 
 class Hero(DrawWithSprite, BaseMovingCreature):
-    image = load_image("frog.png")
     HERO_HEALTH = 4
 
     def __init__(self, pos, size):
-        super().__init__(pos, size, Hero.image) #Hero.image
-
-        self.download_hero_asset()
-        self.frame_index = 0
-        self.animation_speed = 0.15
-        self.image_hero = self.animations['idle'][self.frame_index]
-        self.status = 'idle'
-        super().__init__(pos, size, self.image_hero)
-
-
         self.speed = Hero.BASE_SPEED
         self.jump_speed = Hero.BASE_JUMP_SPEED
         self.gravity = Hero.BASE_GRAVITY
@@ -61,15 +51,23 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.is_invincible = True
         self.invincible_duration = 500
         self.hurt_time = 0
+        self.size = size
+
+        self.animations = {'idle': [], 'run': [], 'jump': [], 'fall': []}
+        self.download_hero_asset()
+        self.frame_index = 0
+        self.animation_speed = 0.15
+        self.image_hero = self.animations['idle'][self.frame_index]
+        self.status = 'idle'
+        super().__init__(pos, size, self.image_hero)
 
     def download_hero_asset(self):
         hero_path = 'textures/Hero/'
-        self.animations = {'idle': [], 'run': [], 'jump': [], 'fall': []}
-
         for animation in self.animations.keys():
             path_animation = hero_path + animation
-            self.animations[animation] = import_folder(path_animation)
-            print(self.animations[animation])
+            self.animations[animation] = import_folder(
+                path_animation,
+                self.size)
 
     def animate(self):
         animation = self.animations[self.status]
@@ -80,15 +78,16 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.image = animation[int(self.frame_index)]
 
     def get_status(self):
-        if self.direction.y < 0:
+        if self.direction.y < 1 and self.direction.x != 0:
             self.status = 'jump'
-        elif self.direction.y > 0:
+        elif self.direction.y > 1:
             self.status = 'fall'
         else:
             if self.direction.x != 0:
                 self.status = 'run'
             else:
                 self.status = 'idle'
+
     def keyboard_checker(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_d]:

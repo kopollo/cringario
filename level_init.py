@@ -56,7 +56,7 @@ class Level:
                     enemy = Enemy((x, y), (platform_size, platform_size))
                     self.enemies.add(enemy)
                 elif cell == 'P':
-                    player_sprite = Hero((x, y), (40, 40))
+                    player_sprite = Hero((x, y), (30, 30))
                     self.player.add(player_sprite)
 
     def scroll_x(self):

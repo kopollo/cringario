@@ -60,6 +60,7 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.animation_speed = 0.15
         self.image_hero = self.animations['idle'][self.frame_index]
         self.status = 'idle'
+        self.face_right = True
         super().__init__(pos, size, self.image_hero)
 
     def download_hero_asset(self):
@@ -76,7 +77,12 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.frame_index += self.animation_speed
         if self.frame_index >= len(animation):
             self.frame_index = 0
-        self.image = animation[int(self.frame_index)]
+
+        image = animation[int(self.frame_index)]
+        if self.face_right:
+            self.image = image
+        else:
+            self.image = pygame.transform.flip(image, True, False)
 
     def get_status(self):
         if self.direction.y != 0.5 and self.direction.y != 0.0 and self.direction.y < 0.5:  #if self.direction.y < 1 and self.direction.x != 0:
@@ -94,8 +100,10 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         controller = self.controller
         if keys[controller['right']]:
             self.direction.x = 1
+            self.face_right = True
         elif keys[controller['left']]:
             self.direction.x = -1
+            self.face_right = False
         else:
             self.direction.x = 0
         if keys[controller['up']] and not self.in_air:

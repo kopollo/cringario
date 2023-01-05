@@ -7,9 +7,9 @@ from import_folder import import_folder
 
 
 class BaseMovingCreature(ABC):
-    BASE_SPEED = 8
-    BASE_JUMP_SPEED = -15
-    BASE_GRAVITY = 0.3
+    BASE_SPEED = 5
+    BASE_JUMP_SPEED = -10
+    BASE_GRAVITY = 0.5
 
     def __init__(self):
         self.speed = self.BASE_SPEED
@@ -54,7 +54,7 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.size = size
         self.controller = controller
 
-        self.animations = {'idle': [], 'run': [], 'jump': [], 'fall': []}
+        self.animations = {'fall': [], 'idle': [], 'jump': [], 'run': []}
         self.download_hero_asset()
         self.frame_index = 0
         self.animation_speed = 0.15
@@ -79,7 +79,7 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.image = animation[int(self.frame_index)]
 
     def get_status(self):
-        if self.direction.y < 1 and self.direction.x != 0:
+        if self.direction.y != 0.5 and self.direction.y != 0.0 and self.direction.y < 0.5:  #if self.direction.y < 1 and self.direction.x != 0:
             self.status = 'jump'
         elif self.direction.y > 1:
             self.status = 'fall'
@@ -135,5 +135,6 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.invincibility_checker()
         self.get_status()
         self.animate()
+        print(self.direction.y, self.direction.x)
         if self.direction.y >= 1:
             self.in_air = True

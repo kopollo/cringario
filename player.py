@@ -135,6 +135,5 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.invincibility_checker()
         self.get_status()
         self.animate()
-        print(self.direction.y, self.direction.x)
         if self.direction.y >= 1:
             self.in_air = True

@@ -12,3 +12,8 @@ def load_image(name, colorkey=None):
     image = pygame.image.load(fullname)
 
     return image
+
+
+def terminate():
+    pygame.quit()
+    sys.exit()

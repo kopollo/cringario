@@ -2,7 +2,7 @@ import os
 import pygame
 
 
-def import_folder(path, size):
+def get_animation_files(path, size):
 	surface_list = []
 
 	for _, __, img_files in os.walk(path):

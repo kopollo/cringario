@@ -4,7 +4,7 @@ from drawable import *
 from level_init import Level
 from levels.test_level import *
 from player import Hero
-from main import screen_width, screen_height, timer
+from game_parameters import screen_width, screen_height, timer
 from cringario_util import terminate
 
 controller1 = {
@@ -27,7 +27,7 @@ def create_level(surface, player_sprite, k):
         screen_width,
         screen_height // k,
         map_height // k,
-        player_sprite
+        player_sprite,
     )
     return level
 
@@ -36,12 +36,15 @@ class SingleplayerGameMode:
     def __init__(self, screen):
         self.screen = screen
         self.time_delta = 0
-        self._game_field = pygame.Surface((screen_width,
-                                           screen_height))
+        self._game_field = pygame.Surface(
+            (screen_width, screen_height)
+        )
 
         self.player_hero = Hero((0, 0), (40, 40), controller1)
-        self.level = create_level(self._game_field,
-                                  self.player_hero, k=1)
+        self.level = create_level(
+            self._game_field,
+            self.player_hero,
+            k=1)
 
     def _game_cycle(self):
         running = True
@@ -66,33 +69,38 @@ class MultiplayerGameMode:
     def __init__(self, screen):
         self.screen = screen
 
-        self.first_player_game_field = pygame.Surface((screen_width,
-                                                       screen_height // 2))
-        self.second_player_game_field = pygame.Surface((screen_width,
-                                                        screen_height // 2))
+        self.first_player_game_field = pygame.Surface(
+            (screen_width,
+             screen_height // 2))
+        self.second_player_game_field = pygame.Surface(
+            (screen_width,
+             screen_height // 2))
 
-    def _game_cycle(self, screen):
+        self.first_player_hero = Hero((0, 0), (20, 20), controller1)
+        self.level1 = create_level(self.first_player_game_field,
+                                   self.first_player_hero, 2)
+
+        self.second_player_hero = Hero((0, 0), (20, 20), controller2)
+        self.level2 = create_level(self.second_player_game_field,
+                                   self.second_player_hero, 2)
+
+    def _game_cycle(self):
         running = True
-
-        first_player_hero = Hero((0, 0), (20, 20), controller1)
-        level1 = create_level(self.first_player_game_field,
-                              first_player_hero, 2)
-
-        second_player_hero = Hero((0, 0), (20, 20), controller2)
-        level2 = create_level(self.second_player_game_field,
-                              second_player_hero, 2)
 
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
-            screen.fill('#123456')
-            screen.blit(self.first_player_game_field, (0, 0))
-            screen.blit(self.second_player_game_field, (0, screen_height // 2))
-            level1.run()
-            level2.run()
-            pygame.display.flip()
+                    terminate()
+            self.draw()
             timer.tick(60)
 
+    def draw(self):
+        self.screen.fill('#123456')
+        self.screen.blit(self.first_player_game_field, (0, 0))
+        self.screen.blit(self.second_player_game_field, (0, screen_height // 2))
+        self.level1.run()
+        self.level2.run()
+        pygame.display.flip()
+
     def run(self):
-        self._game_cycle(self.screen)
+        self._game_cycle()

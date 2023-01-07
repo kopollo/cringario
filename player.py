@@ -3,7 +3,7 @@ from abc import abstractmethod, ABC
 import sys
 from drawable import DrawWithSprite
 from cringario_util import load_image
-from import_folder import import_folder
+from animation_manager import get_animation_files
 
 
 class BaseMovingCreature(ABC):
@@ -67,7 +67,7 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         hero_path = 'textures/Hero/'
         for animation in self.animations.keys():
             path_animation = hero_path + animation
-            self.animations[animation] = import_folder(
+            self.animations[animation] = get_animation_files(
                 path_animation,
                 self.size)
 
@@ -85,7 +85,7 @@ class Hero(DrawWithSprite, BaseMovingCreature):
             self.image = pygame.transform.flip(image, True, False)
 
     def get_status(self):
-        if self.direction.y != 0.5 and self.direction.y != 0.0 and self.direction.y < 0.5:  #if self.direction.y < 1 and self.direction.x != 0:
+        if self.direction.y != 0.5 and self.direction.y != 0.0 and self.direction.y < 0.5:  # if self.direction.y < 1 and self.direction.x != 0:
             self.status = 'jump'
         elif self.direction.y > 1:
             self.status = 'fall'
@@ -108,6 +108,9 @@ class Hero(DrawWithSprite, BaseMovingCreature):
             self.direction.x = 0
         if keys[controller['up']] and not self.in_air:
             self.jump()
+            self.in_air = True
+
+        if self.direction.y >= 1:
             self.in_air = True
 
     def add_score(self, score):
@@ -143,5 +146,3 @@ class Hero(DrawWithSprite, BaseMovingCreature):
         self.invincibility_checker()
         self.get_status()
         self.animate()
-        if self.direction.y >= 1:
-            self.in_air = True

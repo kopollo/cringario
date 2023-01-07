@@ -4,8 +4,7 @@ from collision import Collision
 from cringario_util import load_image
 from drawable import DrawWithSprite
 from enemy import Enemy
-from tiles import Tile
-from Ground import Ground
+from ground import Ground
 # from levels.test_level import ( screen_width, screen_height, map_height)
 from bonuses import HealBonus, SimpleBonus
 from player import Hero
@@ -17,15 +16,14 @@ class Camera:
 
 class Level:
     def __init__(
-            self,level_map, surface,
-            platform_size, screen_width, screen_height, map_height, player
-    ):
+            self, level_map, surface,
+            platform_size, screen_width, screen_height, map_height, player):
         self.world_shift_x = 0
         self.total_shift_x = 0
         self.display = surface
         self.platforms = pygame.sprite.Group()
         self.ground = pygame.sprite.Group()
-        self.player_sprite = player
+        self.player = player
 
         self.platform_size = platform_size
         self.screen_width = screen_width
@@ -34,7 +32,7 @@ class Level:
 
         self.bonuses = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
-        self.player = pygame.sprite.GroupSingle()
+        self.player_sprite = pygame.sprite.GroupSingle()
         self.setup_level(level_map)
 
         fon = DrawWithSprite(
@@ -44,7 +42,7 @@ class Level:
         )
         self.game_fon = pygame.sprite.GroupSingle(fon)
 
-        self.player_collision = Collision(self.player, self.platforms)
+        self.player_collision = Collision(self.player_sprite, self.platforms)
         self.enemy_collision = Collision(self.enemies, self.platforms)
 
     def setup_level(self, level_map):
@@ -54,13 +52,21 @@ class Level:
                 x = col_idx * platform_size
                 y = row_idx * platform_size + self.screen_height - self.map_height
                 if cell == '-':
-                    platform = Tile((x, y), (platform_size, platform_size))
+                    platform = Ground(
+                        (x, y), (platform_size, platform_size),
+                        'platform.png')
                     self.platforms.add(platform)
                 elif cell == 'g':
-                    ground = Ground((x, y), (platform_size, platform_size), 'grass.png')
+                    ground = Ground(
+                        (x, y), (platform_size, platform_size),
+                        'grass.png'
+                    )
                     self.platforms.add(ground)
                 elif cell == 'd':
-                    ground = Ground((x, y), (platform_size, platform_size), 'dirt.png')
+                    ground = Ground(
+                        (x, y), (platform_size, platform_size),
+                        'dirt.png'
+                    )
                     self.platforms.add(ground)
                 elif cell == 'h':
                     bonus = HealBonus((x, y), (platform_size, platform_size))
@@ -72,13 +78,12 @@ class Level:
                     enemy = Enemy((x, y), (platform_size, platform_size))
                     self.enemies.add(enemy)
                 elif cell == 'P':
-                    # player_sprite = Hero((x, y), (30, 30))
-                    self.player_sprite.relocate_to((x, y))
-                    self.player_sprite.spawn_point = (x, y)
-                    self.player.add(self.player_sprite)
+                    self.player.relocate_to((x, y))
+                    self.player.spawn_point = (x, y)
+                    self.player_sprite.add(self.player)
 
     def scroll_x(self):
-        player = self.player.sprite
+        player = self.player
         player_x = player.rect.centerx
         direction_x = player.direction.x
         screen_width = self.screen_width
@@ -96,30 +101,31 @@ class Level:
             self.world_shift_x = 0
 
     def check_bonuses_collision(self):
-        player = self.player.sprite
+        player = self.player
         for bonus in self.bonuses:
             if bonus.rect.colliderect(player.rect):
                 bonus.hide_bonus()
                 bonus.add_bonus(player)
 
     def check_enemies_collision(self):
-        player = self.player.sprite
+        player = self.player
         for enemy in self.enemies:
             if enemy.rect.colliderect(player.rect):
                 player.get_damaged(enemy)
 
     def check_player_state(self):
-        player = self.player.sprite
-        if player.is_dead():
+        player = self.player
+        if player.is_dead() or player.rect.centery > self.screen_height:
             player.hp = player.HERO_HEALTH
             player.relocate_to(player.spawn_point)
             self.world_shift_x -= self.total_shift_x
             self.total_shift_x = 0
 
     def run(self):
+        self.scroll_x()
+
         self.game_fon.draw(self.display)
         self.check_player_state()
-        # print(self.total_shift_x)
 
         self.check_bonuses_collision()
         self.check_enemies_collision()
@@ -139,7 +145,6 @@ class Level:
         self.player_collision.apply()
         self.enemy_collision.apply()
 
-        self.player.draw(self.display)
-        self.player.update()
+        self.player_sprite.draw(self.display)
+        self.player_sprite.update()
 
-        self.scroll_x()

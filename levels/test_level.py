@@ -5,7 +5,7 @@ level_map = [
     '                  -            - -                                     -     -       -    ggdddddddd',
     '                -     -          -      -  e  -       -               --  e  -  s e  --  gdddddddddd',
     '    ---       -         --gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggddddddddddd',
-    '- P    -s              ---dd',
+    '-     -s   P           ---dd',
     'ggggggggggggggggggggggggggg'
 ]
 platform_size = 40

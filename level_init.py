@@ -5,6 +5,7 @@ from cringario_util import load_image
 from drawable import DrawWithSprite
 from enemy import Enemy
 from tiles import Tile
+from Ground import Ground
 # from levels.test_level import ( screen_width, screen_height, map_height)
 from bonuses import HealBonus, SimpleBonus
 from player import Hero
@@ -23,6 +24,7 @@ class Level:
         self.total_shift_x = 0
         self.display = surface
         self.platforms = pygame.sprite.Group()
+        self.ground = pygame.sprite.Group()
         self.player_sprite = player
 
         self.platform_size = platform_size
@@ -54,6 +56,12 @@ class Level:
                 if cell == '-':
                     platform = Tile((x, y), (platform_size, platform_size))
                     self.platforms.add(platform)
+                elif cell == 'g':
+                    ground = Ground((x, y), (platform_size, platform_size), 'grass.png')
+                    self.platforms.add(ground)
+                elif cell == 'd':
+                    ground = Ground((x, y), (platform_size, platform_size), 'dirt.png')
+                    self.platforms.add(ground)
                 elif cell == 'h':
                     bonus = HealBonus((x, y), (platform_size, platform_size))
                     self.bonuses.add(bonus)
@@ -124,6 +132,9 @@ class Level:
 
         self.platforms.update(self.world_shift_x)
         self.platforms.draw(self.display)
+
+        self.ground.update(self.world_shift_x)
+        self.ground.draw(self.display)
 
         self.player_collision.apply()
         self.enemy_collision.apply()

@@ -2,7 +2,7 @@ import sys
 import pygame
 import pygame_gui
 
-import levels.test_level
+import levels.lvl_2
 from cringario_util import terminate
 from game_parameters import timer, WINDOW_SIZE
 from game_mode import SingleplayerGameMode, MultiplayerGameMode
@@ -15,7 +15,7 @@ from windows_manager import (
 class GameManager:
     def __init__(self, screen):
         self.screen = screen
-        self.level_map = levels.test_level.level_map
+        self.level_map = levels.lvl_2.level_map
         # self.window_manager = WindowManager(self.screen)
         self.game = None
 

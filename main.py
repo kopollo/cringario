@@ -2,16 +2,20 @@ import sys
 import pygame
 import pygame_gui
 
-# from cringario_util import load_image, terminate
-# from game_parameters import *
-
+import levels.test_level
+from cringario_util import terminate
+from game_parameters import timer, WINDOW_SIZE
 from game_mode import SingleplayerGameMode, MultiplayerGameMode
-from windows_manager import *
+from windows_manager import (
+    start_window, single_play_button,
+    competitive_play_button, back_button, gui_manager,
+)
 
 
 class GameManager:
     def __init__(self, screen):
         self.screen = screen
+        self.level_map = levels.test_level.level_map
         # self.window_manager = WindowManager(self.screen)
         self.game = None
 
@@ -25,16 +29,19 @@ class GameManager:
                     if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                         if event.ui_element == single_play_button:
                             start_window.hide()
-                            self.game = SingleplayerGameMode(self.screen)
+                            self.game = SingleplayerGameMode(
+                                self.screen,
+                                self.level_map,
+                            )
                         if event.ui_element == competitive_play_button:
                             start_window.hide()
-                            self.game = MultiplayerGameMode(self.screen)
+                            self.game = MultiplayerGameMode(
+                                self.screen,
+                                self.level_map,
+                            )
                         if event.ui_element == back_button:
                             start_window.show()
                 gui_manager.process_events(event)
-
-                # if event.type == pygame.MOUSEBUTTONDOWN:
-                #     score_window.show()
             self.draw_gui()
             if self.game is not None:
                 self.game.run()

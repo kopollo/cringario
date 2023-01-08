@@ -17,7 +17,7 @@ class Camera:
 class Level:
     def __init__(
             self, level_map, surface,
-            platform_size, screen_width, screen_height, map_height, player):
+            platform_size, screen_width, screen_height, player):
         self.world_shift_x = 0
         self.total_shift_x = 0
         self.display = surface
@@ -28,7 +28,7 @@ class Level:
         self.platform_size = platform_size
         self.screen_width = screen_width
         self.screen_height = screen_height
-        self.map_height = map_height
+        self.map_height = platform_size * len(level_map)
 
         self.bonuses = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
@@ -83,20 +83,21 @@ class Level:
                     self.player_sprite.add(self.player)
 
     def scroll_x(self):
+        world_shift_speed = 8
         player = self.player
         player_x = player.rect.centerx
         direction_x = player.direction.x
         screen_width = self.screen_width
-        camera_bound = screen_width / 6
+        camera_bound = screen_width / 4
         if player_x < camera_bound and direction_x < 0:
-            self.world_shift_x = 8
+            self.world_shift_x = world_shift_speed
             player.rect.x += camera_bound - player_x
-            self.total_shift_x += 8
+            self.total_shift_x += world_shift_speed
 
         elif player_x > screen_width - camera_bound and direction_x > 0:
-            self.world_shift_x = -8
+            self.world_shift_x = -world_shift_speed
             player.rect.x -= player_x - (screen_width - camera_bound)
-            self.total_shift_x -= 8
+            self.total_shift_x -= world_shift_speed
         else:
             self.world_shift_x = 0
 

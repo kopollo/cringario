@@ -1,11 +1,11 @@
 level_map = [
     '                                                                                               f',
     '                     h                                       s                                gggggg',
-    '                    --           -        ---    ---     -----------                        ggdddddd5',
+    '                    --           -        ---    ---     -----------                        ggdddddd',
     '                  -            - -                                     -     -       -    ggdddddddd',
     '                -     -          -      -  e  -       -               --  e  -  s e  --  gdddddddddd',
     '    ---       -         --gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggddddddddddd',
-    '-     -s   P           ---dd',
-    'ggggggggggggggggggggggggggg'
+    '-     -s   P           ---dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
+    'gggggggggggggggggggggggddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'
 ]
 

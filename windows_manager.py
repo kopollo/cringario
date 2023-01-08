@@ -38,6 +38,9 @@ score_window = UIWindow(
     manager=gui_manager,
     visible=False,
 )
+score_window_image = load_image('finish_fon.png')
+score_window.image = score_window_image
+
 back_button = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((100, 460), (130, 50)),
     text='to main menu',

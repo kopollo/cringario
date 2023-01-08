@@ -2,7 +2,7 @@ import pygame_gui
 from pygame_gui.elements import UIWindow, UIButton
 
 from cringario_util import load_image, terminate
-from game_parameters import *
+from config import *
 
 border = 50
 gui_manager = pygame_gui.UIManager(

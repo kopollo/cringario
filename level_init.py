@@ -7,7 +7,10 @@ from enemy import Enemy
 from ground import Ground
 # from levels.test_level import ( screen_width, screen_height, map_height)
 from bonuses import HealBonus, SimpleBonus
+from game_over_object import WinObject
+# from main import GameManager
 from player import Hero
+from windows_manager import start_window, gui_manager
 
 
 class Camera:
@@ -32,6 +35,7 @@ class Level:
 
         self.bonuses = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
+        self.cup_sprite = pygame.sprite.GroupSingle()
         self.player_sprite = pygame.sprite.GroupSingle()
         self.setup_level(level_map)
 
@@ -59,13 +63,13 @@ class Level:
                 elif cell == 'g':
                     ground = Ground(
                         (x, y), (platform_size, platform_size),
-                        'grass.png'
+                        'platform.png'
                     )
                     self.platforms.add(ground)
                 elif cell == 'd':
                     ground = Ground(
                         (x, y), (platform_size, platform_size),
-                        'dirt.png'
+                        'platform.png'
                     )
                     self.platforms.add(ground)
                 elif cell == 'h':
@@ -74,6 +78,9 @@ class Level:
                 elif cell == 's':
                     bonus = SimpleBonus((x, y), (platform_size, platform_size))
                     self.bonuses.add(bonus)
+                elif cell == 'w':
+                    cup = WinObject((x, y), (platform_size, platform_size))
+                    self.cup_sprite.add(cup)
                 elif cell == 'e':
                     enemy = Enemy((x, y), (platform_size, platform_size))
                     self.enemies.add(enemy)
@@ -122,17 +129,27 @@ class Level:
             self.world_shift_x -= self.total_shift_x
             self.total_shift_x = 0
 
+    def check_is_game_over(self):
+        player = self.player
+        cup = self.cup_sprite.sprite
+        if cup.rect.colliderect(player.rect):
+            return True
+
     def run(self):
         self.scroll_x()
 
         self.game_fon.draw(self.display)
-        self.check_player_state()
 
+        self.check_player_state()
+        # self.check_is_game_over()
         self.check_bonuses_collision()
         self.check_enemies_collision()
 
         self.bonuses.draw(self.display)
         self.bonuses.update(self.world_shift_x)
+
+        self.cup_sprite.draw(self.display)
+        self.cup_sprite.update(self.world_shift_x)
 
         self.enemies.draw(self.display)
         self.enemies.update(self.world_shift_x)
@@ -148,4 +165,3 @@ class Level:
 
         self.player_sprite.draw(self.display)
         self.player_sprite.update()
-

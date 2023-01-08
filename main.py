@@ -4,7 +4,7 @@ import pygame_gui
 
 import levels.lvl_2
 from cringario_util import terminate
-from game_parameters import timer, WINDOW_SIZE
+from config import timer, WINDOW_SIZE
 from game_mode import SingleplayerGameMode, MultiplayerGameMode
 from windows_manager import (
     start_window, single_play_button,
@@ -42,9 +42,14 @@ class GameManager:
                         if event.ui_element == back_button:
                             start_window.show()
                 gui_manager.process_events(event)
-            self.draw_gui()
+            self.screen.fill('#123456')
             if self.game is not None:
-                self.game.run()
+                self.game.draw()
+                if self.game.is_game_over():
+                    self.game = None
+                    start_window.show()
+            self.draw_gui()
+
             pygame.display.flip()
 
     def draw_gui(self):

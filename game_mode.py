@@ -6,7 +6,7 @@ import pygame
 from level_init import Level
 # from levels.test_level import *
 from player import Hero
-from game_parameters import screen_width, screen_height, timer, platform_size, \
+from config import screen_width, screen_height, timer, platform_size, \
     player_size
 from cringario_util import terminate
 
@@ -27,17 +27,9 @@ class BaseGameMode(ABC):
     def draw(self):
         pass
 
-    def _game_cycle(self):
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    terminate()
-            self.draw()
-            timer.tick(60)
-
-    def run(self):
-        self._game_cycle()
+    @abstractmethod
+    def is_game_over(self):
+        pass
 
 
 def create_level(surface, player_sprite, level_map, k):
@@ -70,16 +62,20 @@ class SingleplayerGameMode(BaseGameMode):
             k=1)
 
     def draw(self):
-        self.screen.fill('#123456')
         self.screen.blit(self._game_field, (0, 0))
         self.level.run()
         pygame.display.flip()
+
+    def is_game_over(self):
+        if self.level.check_is_game_over():
+            return True
 
 
 class MultiplayerGameMode(BaseGameMode):
     def __init__(self, screen, level_map):
         self.screen = screen
         self.level_map = level_map
+        self.is_over = False
 
         self.first_player_game_field = pygame.Surface(
             (screen_width,
@@ -103,9 +99,20 @@ class MultiplayerGameMode(BaseGameMode):
             k=2)
 
     def draw(self):
-        self.screen.fill('#123456')
         self.screen.blit(self.first_player_game_field, (0, 0))
         self.screen.blit(self.second_player_game_field, (0, screen_height // 2))
-        self.level1.run()
-        self.level2.run()
+        self.draw_level(self.level1)
+        self.draw_level(self.level2)
+        # self.level2.run()
+        # if not self.is_over:
+        #     self.level1.run()
         pygame.display.flip()
+
+    def draw_level(self, level):
+        if not level.check_is_game_over():
+            level.run()
+
+    def is_game_over(self):
+        if self.level1.check_is_game_over() and \
+                self.level2.check_is_game_over():
+            return True

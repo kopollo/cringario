@@ -1,8 +1,13 @@
+import pygame
 import pygame_gui
 from pygame_gui.elements import UIWindow, UIButton
 
 from cringario_util import load_image, terminate
-from config import *
+
+from config_parser import (
+    screen_width, screen_height, timer, platform_size,
+    player_size,
+)
 
 border = 50
 gui_manager = pygame_gui.UIManager(

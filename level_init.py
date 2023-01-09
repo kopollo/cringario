@@ -5,12 +5,10 @@ from cringario_util import load_image
 from drawable import DrawWithSprite
 from enemy import Enemy
 from ground import Ground
-# from levels.test_level import ( screen_width, screen_height, map_height)
 from bonuses import HealBonus, SimpleBonus
 from game_over_object import WinObject
-# from main import GameManager
-from player import Hero
-from windows_manager import start_window, gui_manager
+
+from config_parser import heal_bonus_image, simple_bonus_image
 
 
 class Camera:
@@ -18,9 +16,9 @@ class Camera:
 
 
 class Level:
-    def __init__(
-            self, level_map, surface,
-            platform_size, screen_width, screen_height, player):
+    def __init__(self, level_map, surface,
+                 platform_size, screen_width,
+                 screen_height, player):
         self.world_shift_x = 0
         self.total_shift_x = 0
         self.display = surface
@@ -73,10 +71,16 @@ class Level:
                     )
                     self.platforms.add(ground)
                 elif cell == 'h':
-                    bonus = HealBonus((x, y), (platform_size, platform_size))
+                    bonus = HealBonus(
+                        (x, y), (platform_size, platform_size),
+                        heal_bonus_image,
+                    )
                     self.bonuses.add(bonus)
                 elif cell == 's':
-                    bonus = SimpleBonus((x, y), (platform_size, platform_size))
+                    bonus = SimpleBonus(
+                        (x, y), (platform_size, platform_size),
+                        simple_bonus_image,
+                    )
                     self.bonuses.add(bonus)
                 elif cell == 'w':
                     cup = WinObject((x, y), (platform_size, platform_size))
@@ -141,7 +145,6 @@ class Level:
         self.game_fon.draw(self.display)
 
         self.check_player_state()
-        # self.check_is_game_over()
         self.check_bonuses_collision()
         self.check_enemies_collision()
 

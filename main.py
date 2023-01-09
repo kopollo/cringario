@@ -1,10 +1,15 @@
 import sys
 import pygame
 import pygame_gui
+import yaml
 
 import levels.lvl_2
 from cringario_util import terminate
-from config import timer, WINDOW_SIZE
+
+from config_parser import (
+    screen_width, screen_height, timer, platform_size,
+    player_size,screen_size
+)
 from game_mode import SingleplayerGameMode, MultiplayerGameMode
 from windows_manager import (
     start_window, single_play_button,
@@ -62,7 +67,7 @@ class GameManager:
 
 
 def main():
-    screen = pygame.display.set_mode(WINDOW_SIZE)
+    screen = pygame.display.set_mode(screen_size)
     game_manager = GameManager(screen)
     game_manager.run()
     pygame.quit()

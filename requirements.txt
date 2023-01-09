@@ -1,2 +1,3 @@
-pygame
+pygame~=2.1.2
 pygame_gui
+PyYAML~=6.0

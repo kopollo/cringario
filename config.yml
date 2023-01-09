@@ -1,0 +1,10 @@
+---
+level:
+  screen_width: 1200
+  screen_height: 800
+  platform_size: 40
+  player_size: [40, 40]
+  screen_size: [1200, 800]
+path:
+  heal_bonus: cat.png
+  simple_bonus: cat2.png

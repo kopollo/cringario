@@ -6,8 +6,10 @@ import pygame
 from level_init import Level
 # from levels.test_level import *
 from player import Hero
-from config import screen_width, screen_height, timer, platform_size, \
-    player_size
+from config_parser import (
+    screen_width, screen_height, timer, platform_size,
+    player_size,
+)
 from cringario_util import terminate
 
 controller1 = {

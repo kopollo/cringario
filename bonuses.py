@@ -21,10 +21,9 @@ class BaseBonus(ABC, pygame.sprite.Sprite):
 class HealBonus(BaseBonus, DrawWithSprite):
     BONUS_HP = 1
     BONUS_SCORE = 50
-    image = load_image("cat.png")
 
-    def __init__(self, pos, size):
-        super().__init__(pos, size, HealBonus.image)
+    def __init__(self, pos, size, image):
+        super().__init__(pos, size, image)
         self.hp = HealBonus.BONUS_HP
         self.score = HealBonus.BONUS_SCORE
 
@@ -35,10 +34,9 @@ class HealBonus(BaseBonus, DrawWithSprite):
 
 class SimpleBonus(BaseBonus, DrawWithSprite):
     BONUS_SCORE = 100
-    image = load_image("cat2.png")
 
-    def __init__(self, pos, size):
-        super().__init__(pos, size, SimpleBonus.image)
+    def __init__(self, pos, size, image):
+        super().__init__(pos, size, image)
         self.score = SimpleBonus.BONUS_SCORE
 
     def add_bonus(self, player):

@@ -20,13 +20,16 @@ class DrawWithSprite(pygame.sprite.Sprite):
 
 
 class DrawWithText(pygame.sprite.Sprite):
-    def __init__(self, pos, size, text):
+    def __init__(self, pos, text):
         super().__init__()
-        width, height = size
         font = pygame.font.Font(None, 50)
-        self.textSurf = font.render(text, True, (100, 255, 100))
-        self.image = pygame.transform.scale(self.textSurf, (width, height))
+        self.text = font.render(text, True, 'white')
+        self.width = self.text.get_width()
+        self.height = self.text.get_height()
+        self.image = pygame.transform.scale(
+            self.text, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.topleft = pos
-        # self.image.blit(self.textSurf, [W / 2 - W / 2, H / 2 - H / 2])
-        # if we wanna size of text, not fixed
+        self.image.blit(self.text,
+                        [self.width / 2 - self.width / 2,
+                         self.height / 2 - self.height / 2])

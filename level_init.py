@@ -6,6 +6,7 @@ from drawable import DrawWithSprite
 from enemy import Enemy
 from ground import Ground
 from bonuses import HealBonus, SimpleBonus
+from player_state_indicator import PlayerStateIndicator
 from game_over_object import WinObject
 
 from config_parser import (
@@ -38,6 +39,12 @@ class Level:
         self.enemies = pygame.sprite.Group()
         self.cup_sprite = pygame.sprite.GroupSingle()
         self.player_sprite = pygame.sprite.GroupSingle()
+        self.player_state_indicator = PlayerStateIndicator(
+            (self.screen_width - 350, 20),
+            self.player,
+        )
+        self.player_state_indicator_sprite = pygame.sprite.GroupSingle(
+            self.player_state_indicator)
         self.setup_level(level_map)
 
         fon = DrawWithSprite(
@@ -175,3 +182,6 @@ class Level:
 
         self.player_sprite.draw(self.display)
         self.player_sprite.update()
+
+        self.player_state_indicator_sprite.draw(self.display)
+        self.player_state_indicator_sprite.update()

@@ -8,3 +8,8 @@ level:
 path:
   heal_bonus: cat.png
   simple_bonus: cat2.png
+  game_fon: mount.png
+  platform: platform.png
+  enemy: bad.png
+  win_cup: win.png
+

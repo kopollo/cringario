@@ -2,6 +2,12 @@ import os
 import sys
 
 import pygame
+import yaml
+
+
+def read_config():
+    with open('config.yml', 'r') as f:
+        return yaml.safe_load(f)
 
 
 def load_image(name, colorkey=None):

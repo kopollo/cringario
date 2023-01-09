@@ -8,7 +8,10 @@ from ground import Ground
 from bonuses import HealBonus, SimpleBonus
 from game_over_object import WinObject
 
-from config_parser import heal_bonus_image, simple_bonus_image
+from config_parser import (
+    heal_bonus_image, simple_bonus_image, game_fon,
+    platform_image, enemy_image, win_cup_image
+)
 
 
 class Camera:
@@ -39,8 +42,7 @@ class Level:
 
         fon = DrawWithSprite(
             (0, 0),
-            (screen_width, screen_height),
-            load_image('mount.png')
+            (screen_width, screen_height), game_fon
         )
         self.game_fon = pygame.sprite.GroupSingle(fon)
 
@@ -56,18 +58,19 @@ class Level:
                 if cell == '-':
                     platform = Ground(
                         (x, y), (platform_size, platform_size),
-                        'platform.png')
+                        platform_image,
+                    )
                     self.platforms.add(platform)
                 elif cell == 'g':
                     ground = Ground(
                         (x, y), (platform_size, platform_size),
-                        'platform.png'
+                        platform_image,
                     )
                     self.platforms.add(ground)
                 elif cell == 'd':
                     ground = Ground(
                         (x, y), (platform_size, platform_size),
-                        'platform.png'
+                        platform_image,
                     )
                     self.platforms.add(ground)
                 elif cell == 'h':
@@ -83,10 +86,14 @@ class Level:
                     )
                     self.bonuses.add(bonus)
                 elif cell == 'w':
-                    cup = WinObject((x, y), (platform_size, platform_size))
+                    cup = WinObject(
+                        (x, y), (platform_size, platform_size),
+                        win_cup_image)
                     self.cup_sprite.add(cup)
                 elif cell == 'e':
-                    enemy = Enemy((x, y), (platform_size, platform_size))
+                    enemy = Enemy(
+                        (x, y), (platform_size, platform_size),
+                        enemy_image)
                     self.enemies.add(enemy)
                 elif cell == 'P':
                     self.player.relocate_to((x, y))

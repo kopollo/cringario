@@ -2,15 +2,12 @@ from abc import ABC, abstractmethod
 
 import pygame
 
-# from drawable import *
 from level_init import Level
-# from levels.test_level import *
 from player import Hero
 from config_parser import (
     screen_width, screen_height, timer, platform_size,
     player_size,
 )
-from cringario_util import terminate
 
 controller1 = {
     'left': pygame.K_a,
@@ -33,17 +30,16 @@ class BaseGameMode(ABC):
     def is_game_over(self):
         pass
 
-
-def create_level(surface, player_sprite, level_map, k):
-    level = Level(
-        level_map,
-        surface,
-        platform_size,
-        screen_width,
-        screen_height // k,
-        player_sprite,
-    )
-    return level
+    def create_level(self, surface, player_sprite, level_map, height_coef):
+        level = Level(
+            level_map,
+            surface,
+            platform_size,
+            screen_width,
+            screen_height // height_coef,
+            player_sprite,
+        )
+        return level
 
 
 class SingleplayerGameMode(BaseGameMode):
@@ -57,11 +53,11 @@ class SingleplayerGameMode(BaseGameMode):
         )
 
         self.player_hero = Hero((0, 0), player_size, controller1)
-        self.level = create_level(
+        self.level = self.create_level(
             self._game_field,
             self.player_hero,
             self.level_map,
-            k=1)
+            height_coef=1)
 
     def draw(self):
         self.screen.blit(self._game_field, (0, 0))
@@ -87,27 +83,24 @@ class MultiplayerGameMode(BaseGameMode):
              screen_height // 2))
 
         self.first_player_hero = Hero((0, 0), player_size, controller1)
-        self.level1 = create_level(
+        self.level1 = self.create_level(
             self.first_player_game_field,
             self.first_player_hero,
             self.level_map,
-            k=2)
+            height_coef=2)
 
         self.second_player_hero = Hero((0, 0), player_size, controller2)
-        self.level2 = create_level(
+        self.level2 = self.create_level(
             self.second_player_game_field,
             self.second_player_hero,
             self.level_map,
-            k=2)
+            height_coef=2)
 
     def draw(self):
         self.screen.blit(self.first_player_game_field, (0, 0))
         self.screen.blit(self.second_player_game_field, (0, screen_height // 2))
         self.draw_level(self.level1)
         self.draw_level(self.level2)
-        # self.level2.run()
-        # if not self.is_over:
-        #     self.level1.run()
         pygame.display.flip()
 
     def draw_level(self, level):

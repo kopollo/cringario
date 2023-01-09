@@ -5,8 +5,7 @@ from pygame_gui.elements import UIWindow, UIButton
 from cringario_util import load_image, terminate
 
 from config_parser import (
-    screen_width, screen_height, timer, platform_size,
-    player_size,
+    screen_width, screen_height,
 )
 
 border = 50

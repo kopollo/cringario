@@ -1,7 +1,4 @@
-import pygame
-
 from drawable import DrawWithSprite
-from cringario_util import load_image
 
 
 class Ground(DrawWithSprite):

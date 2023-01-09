@@ -1,6 +1,5 @@
 import pygame
 from cringario_util import load_image, read_config
-import yaml
 
 pygame.init()
 

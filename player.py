@@ -1,8 +1,6 @@
 import pygame
 from abc import abstractmethod, ABC
-import sys
 from drawable import DrawWithSprite
-from cringario_util import load_image
 from animation_manager import get_animation_files
 
 

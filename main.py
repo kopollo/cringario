@@ -1,17 +1,12 @@
-import sys
 import pygame
 import pygame_gui
-import yaml
 
 from levels import (
     test_level, lvl_2
 )
 from cringario_util import terminate
 
-from config_parser import (
-    screen_width, screen_height, timer, platform_size,
-    player_size, screen_size
-)
+from config_parser import timer, screen_size
 from game_mode import SingleplayerGameMode, MultiplayerGameMode
 from windows_manager import (
     start_window, single_play_button,

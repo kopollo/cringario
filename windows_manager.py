@@ -43,8 +43,8 @@ score_window = UIWindow(
     manager=gui_manager,
     visible=False,
 )
-score_window_image = load_image('finish_fon.png')
-score_window.image = score_window_image
+# score_window_image = load_image('finish_fon.png') # use scale() to fix
+# score_window.image = score_window_image
 
 back_button = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((100, 460), (130, 50)),
@@ -60,8 +60,8 @@ select_lvl_window = UIWindow(
     manager=gui_manager,
     visible=False,
 )
-select_lvl_image = load_image('finish_fon.png')
-select_lvl_window.image = select_lvl_image
+# select_lvl_image = load_image('finish_fon.png')
+# select_lvl_window.image = select_lvl_image
 
 lvl_1_button = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((100, 460), (130, 50)),

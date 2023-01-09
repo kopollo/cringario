@@ -3,7 +3,9 @@ import pygame
 import pygame_gui
 import yaml
 
-import levels.lvl_2
+from levels import (
+    test_level, lvl_2
+)
 from cringario_util import terminate
 
 from config_parser import (
@@ -13,14 +15,15 @@ from config_parser import (
 from game_mode import SingleplayerGameMode, MultiplayerGameMode
 from windows_manager import (
     start_window, single_play_button,
-    competitive_play_button, back_button, gui_manager,
+    competitive_play_button, back_button, gui_manager, score_window, select_lvl_window,
+    lvl_1_button, lvl_2_button, lvl_3_button
 )
 
 
 class GameManager:
     def __init__(self, screen):
         self.screen = screen
-        self.level_map = levels.lvl_2.level_map
+        self.level_map = lvl_2.level_map
         # self.window_manager = WindowManager(self.screen)
         self.game = None
 
@@ -45,6 +48,7 @@ class GameManager:
                                 self.level_map,
                             )
                         if event.ui_element == back_button:
+                            score_window.hide()
                             start_window.show()
                 gui_manager.process_events(event)
             self.screen.fill('#123456')
@@ -52,7 +56,7 @@ class GameManager:
                 self.game.draw()
                 if self.game.is_game_over():
                     self.game = None
-                    start_window.show()
+                    score_window.show()
             self.draw_gui()
 
             pygame.display.flip()

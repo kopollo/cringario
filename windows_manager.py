@@ -53,6 +53,36 @@ back_button = pygame_gui.elements.UIButton(
     container=score_window,
 )
 
+select_lvl_window = UIWindow(
+    rect=pygame.Rect(
+        (-border, -border),
+        (screen_width + 2 * border, screen_height + 2 * border)),
+    manager=gui_manager,
+    visible=False,
+)
+select_lvl_image = load_image('finish_fon.png')
+select_lvl_window.image = select_lvl_image
+
+lvl_1_button = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect((100, 460), (130, 50)),
+    text='LEVEL 1',
+    manager=gui_manager,
+    container=select_lvl_window,
+)
+lvl_2_button = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect((200, 460), (130, 50)),
+    text='LEVEL 2',
+    manager=gui_manager,
+    container=select_lvl_window,
+)
+lvl_3_button = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect((300, 460), (130, 50)),
+    text='LEVEL 3',
+    manager=gui_manager,
+    container=select_lvl_window,
+)
+
+
 
 # class WindowManager:
 #     def __init__(self, screen):

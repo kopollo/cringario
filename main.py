@@ -2,7 +2,7 @@ import pygame
 import pygame_gui
 
 from levels import (
-    test_level, lvl_2
+    lvl_1, lvl_2, lvl_3
 )
 from cringario_util import terminate
 
@@ -45,11 +45,15 @@ class GameManager:
                             score_window.hide()
                             start_window.show()
                         if event.ui_element == lvl_1_button:
-                            self.level_map = test_level.level_map
+                            self.level_map = lvl_1.level_map
                             select_lvl_window.hide()
                             self.is_game_started = True
                         if event.ui_element == lvl_2_button:
                             self.level_map = lvl_2.level_map
+                            select_lvl_window.hide()
+                            self.is_game_started = True
+                        if event.ui_element == lvl_3_button:
+                            self.level_map = lvl_3.level_map
                             select_lvl_window.hide()
                             self.is_game_started = True
 

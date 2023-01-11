@@ -59,8 +59,8 @@ select_lvl_window = UIWindow(
     manager=gui_manager,
     visible=False,
 )
-# select_lvl_image = load_image('finish_fon.png')
-# select_lvl_window.image = select_lvl_image
+select_lvl_image = pygame.transform.scale(load_image('finish_fon.png'), (1500, 1500))
+select_lvl_window.image = select_lvl_image
 
 lvl_1_button = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect((100, 460), (130, 50)),
@@ -69,13 +69,13 @@ lvl_1_button = pygame_gui.elements.UIButton(
     container=select_lvl_window,
 )
 lvl_2_button = pygame_gui.elements.UIButton(
-    relative_rect=pygame.Rect((200, 460), (130, 50)),
+    relative_rect=pygame.Rect((500, 460), (130, 50)),
     text='LEVEL 2',
     manager=gui_manager,
     container=select_lvl_window,
 )
 lvl_3_button = pygame_gui.elements.UIButton(
-    relative_rect=pygame.Rect((300, 460), (130, 50)),
+    relative_rect=pygame.Rect((900, 460), (130, 50)),
     text='LEVEL 3',
     manager=gui_manager,
     container=select_lvl_window,

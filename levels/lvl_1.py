@@ -1,9 +1,9 @@
 level_map = [
-    '                                                                                               f',
+    '                                                                                               w',
     '                     h                                       s                                gggggg',
     '                    --           -        ---    ---     -----------                        ggdddddd',
     '                  -            - -                                     -     -       -    ggdddddddd',
-    '                -     -          -      -  e  -  w    -               --  e  -  s e  --  gdddddddddd',
+    '                -     -          -      -  e  -  s    -               --  e  -  s e  --  gdddddddddd',
     '    ---       -         --gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggddddddddddd',
     '-     -s   P           ---dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
     'gggggggggggggggggggggggddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'

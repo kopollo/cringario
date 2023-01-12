@@ -18,5 +18,7 @@ game_fon = load_image(path['game_fon'])
 platform_image = load_image(path['platform'])
 enemy_image = load_image(path['enemy'])
 win_cup_image = load_image(path['win_cup'])
+grass_image = load_image(path['grass'])
+dirt_image = load_image(path['dirt'])
 
 timer = pygame.time.Clock()

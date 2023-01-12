@@ -12,4 +12,6 @@ path:
   platform: platform.png
   enemy: bad.png
   win_cup: win.png
+  grass: grass.png
+  dirt: dirt.png
 

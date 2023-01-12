@@ -11,7 +11,7 @@ from game_over_object import WinObject
 
 from config_parser import (
     heal_bonus_image, simple_bonus_image, game_fon,
-    platform_image, enemy_image, win_cup_image
+    platform_image, enemy_image, win_cup_image, grass_image, dirt_image
 )
 
 
@@ -71,13 +71,13 @@ class Level:
                 elif cell == 'g':
                     ground = Ground(
                         (x, y), (platform_size, platform_size),
-                        platform_image,
+                        grass_image,
                     )
                     self.platforms.add(ground)
                 elif cell == 'd':
                     ground = Ground(
                         (x, y), (platform_size, platform_size),
-                        platform_image,
+                        dirt_image,
                     )
                     self.platforms.add(ground)
                 elif cell == 'h':

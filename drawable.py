@@ -22,7 +22,7 @@ class DrawWithSprite(pygame.sprite.Sprite):
 class DrawWithText(pygame.sprite.Sprite):
     def __init__(self, pos, text):
         super().__init__()
-        font = pygame.font.Font(None, 50)
+        font = pygame.font.Font(None, 40)
         self.text = font.render(text, True, 'white')
         self.width = self.text.get_width()
         self.height = self.text.get_height()
@@ -30,6 +30,7 @@ class DrawWithText(pygame.sprite.Sprite):
             self.text, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.topleft = pos
-        self.image.blit(self.text,
-                        [self.width / 2 - self.width / 2,
-                         self.height / 2 - self.height / 2])
+        self.image.blit(
+            self.text,
+            [self.width / 2 - self.width / 2,
+             self.height / 2 - self.height / 2])

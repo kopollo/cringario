@@ -2,7 +2,7 @@
 level:
   screen_width: 1200
   screen_height: 800
-  platform_size: 40
+  platform_size: 45
   player_size: [40, 40]
   screen_size: [1200, 800]
 path:
@@ -14,4 +14,9 @@ path:
   win_cup: win.png
   grass: grass.png
   dirt: dirt.png
+window_elements:
+  button_size: [130, 50]
+  label_size: [200, 50]
+  border: 50
+
 

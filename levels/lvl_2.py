@@ -4,7 +4,7 @@ level_map = [
     '-                                                                                                               ---                   ',
     '-                                                                                                         -                  ',
     'ggg                                                                           s                               -               w    ',
-    'dddgP            s                   h                                    --- -      -   -  -   -   -   d         -  gggggggggggggg            ',
+    'dddg    P        s                   h                                    --- -      -   -  -   -   -   d         -  gggggggggggggg            ',
     'ddddg       gggggggggggg   --   ggggggggg -                                       -                     d        -   dddddddddddddd           ',
     'dd    -  -                                -                                     -                       d       -    dddddddddddddd           ',
     'dd    -       e                e          -      e      -        -            -                         d      -     dddddddddddddd         ',

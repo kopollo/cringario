@@ -8,6 +8,10 @@ from config_parser import (
     screen_width, screen_height, timer, platform_size,
     player_size,
 )
+from windows_manager import (
+    first_player_result_label,
+    second_player_result_label
+)
 
 controller1 = {
     'left': pygame.K_a,
@@ -41,6 +45,10 @@ class BaseGameMode(ABC):
         )
         return level
 
+    @abstractmethod
+    def set_result_view(self):
+        pass
+
 
 class SingleplayerGameMode(BaseGameMode):
     def __init__(self, screen, level_map):
@@ -66,7 +74,13 @@ class SingleplayerGameMode(BaseGameMode):
 
     def is_game_over(self):
         if self.level.check_is_game_over():
+            self.set_result_view()
             return True
+
+    def set_result_view(self):
+        first_player_result_label.set_text(
+            f"FIRST PLAYER SCORE: {self.player_hero.score}\n"
+        )
 
 
 class MultiplayerGameMode(BaseGameMode):
@@ -108,6 +122,18 @@ class MultiplayerGameMode(BaseGameMode):
             level.run()
 
     def is_game_over(self):
-        if self.level1.check_is_game_over() and \
-                self.level2.check_is_game_over():
+        if (self.level1.check_is_game_over() and
+                self.level2.check_is_game_over()):
+            self.set_result_view()
             return True
+
+    def set_result_view(self):
+
+        first_player_result_label.set_text(
+            f"FIRST PLAYER SCORE: {self.first_player_hero.score}\n"
+
+        )
+        second_player_result_label.set_text(
+            f"FIRST PLAYER SCORE: {self.second_player_hero.score}\n"
+        )
+        # second_player_result_label.set_text("uuuu")

@@ -1,9 +1,0 @@
-'                      h                                                                          f
-                      bb                                      c                             ggggggggg
-                    b            b        bbb    bbb     bbbbbbbbbb                        ggggg
-                  b            b b                                     b     b       b    gggggg
-                b     b          b      b  m  b       b               bb  m  b   cm  bb  ggggggg       
-    bbb       b         bbgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg                         
-    bc                 bbbgg      
-ggggggggggggggggggggggggggg                                                                                                   
-'                    

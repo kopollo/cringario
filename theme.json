@@ -40,8 +40,7 @@
   },
   "label": {
     "colours": {
-      "normal_text": "#c5cbd8",
-      "size": "24"
+      "normal_text": "#c5cbd8"
     },
     "font": {
       "name": "montserrat",
@@ -50,7 +49,6 @@
       "italic": "0"
     },
     "misc": {
-      "size": "24",
       "text_shadow": "1",
       "text_shadow_size": "1",
       "text_shadow_offset": "0,0"

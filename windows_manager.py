@@ -45,11 +45,10 @@ start_window.image = start_menu_image
 
 score_window = UIWindow(
     rect=pygame.Rect(*window_rect_coords),
-
     manager=gui_manager,
     visible=False,
 )
-score_window_image = load_image('secret.png')
+score_window_image = load_image('score.png')
 score_window.image = score_window_image
 
 back_button = pygame_gui.elements.UIButton(

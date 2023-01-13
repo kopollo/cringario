@@ -1,7 +1,6 @@
 import pygame
 
 from collision import Collision
-from cringario_util import load_image
 from drawable import DrawWithSprite
 from enemy import Enemy
 from ground import Ground
@@ -13,10 +12,6 @@ from config_parser import (
     heal_bonus_image, simple_bonus_image, game_fon,
     platform_image, enemy_image, win_cup_image, grass_image, dirt_image
 )
-
-
-class Camera:
-    pass
 
 
 class Level:
@@ -40,11 +35,9 @@ class Level:
         self.cup_sprite = pygame.sprite.GroupSingle()
         self.player_sprite = pygame.sprite.GroupSingle()
         self.player_state_indicator = PlayerStateIndicator(
-            (self.screen_width - 350, 20),
-            self.player,
+            self.screen_width - 250, 20,
+            self.player, self.display,
         )
-        self.player_state_indicator_sprite = pygame.sprite.GroupSingle(
-            self.player_state_indicator)
         self.setup_level(level_map)
 
         fon = DrawWithSprite(
@@ -61,7 +54,8 @@ class Level:
         for row_idx, row in enumerate(level_map):
             for col_idx, cell in enumerate(row):
                 x = col_idx * platform_size
-                y = row_idx * platform_size + self.screen_height - self.map_height
+                y = (row_idx * platform_size +
+                     self.screen_height - self.map_height)
                 if cell == '-':
                     platform = Ground(
                         (x, y), (platform_size, platform_size),
@@ -183,5 +177,4 @@ class Level:
         self.player_sprite.draw(self.display)
         self.player_sprite.update()
 
-        self.player_state_indicator_sprite.draw(self.display)
-        self.player_state_indicator_sprite.update()
+        self.player_state_indicator.run()

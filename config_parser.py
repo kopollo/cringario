@@ -11,7 +11,7 @@ screen_height = level_config['screen_height']
 player_size = level_config['player_size']
 screen_size = level_config['screen_size']
 
-path = data['path']
+path = data['level_obj_path']
 heal_bonus_image = load_image(path['heal_bonus'])
 simple_bonus_image = load_image(path['simple_bonus'])
 game_fon = load_image(path['game_fon'])

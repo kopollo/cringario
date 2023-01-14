@@ -5,7 +5,7 @@ level:
   platform_size: 45
   player_size: [40, 40]
   screen_size: [1200, 800]
-path:
+level_obj_path:
   heal_bonus: cat.png
   simple_bonus: cat2.png
   game_fon: mount.png

@@ -1,3 +1,4 @@
+"""Contain game manager"""
 import pygame
 import pygame_gui
 

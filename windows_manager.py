@@ -2,15 +2,15 @@ import pygame
 import pygame_gui
 from pygame_gui.elements import UIWindow, UIButton
 
-from cringario_util import load_image, read_config
+from cringario_util import load_image, read_config, load_level
 
 from config_parser import (
     screen_width, screen_height,
 )
 
-from levels import (
-    lvl_1, lvl_2, lvl_3
-)
+# from levels import (
+#     lvl_1, lvl_2, lvl_3
+# )
 
 config = read_config()["window_elements"]
 
@@ -102,19 +102,19 @@ class LevelSelectWindow(UIWindow):
             rect=pygame.Rect((100, 460), button_size),
             container=self,
             text="level 1",
-            level_map=lvl_1.level_map
+            level_map=load_level("lvl_1.txt")
         )
         self.lvl_2_button = LevelSelectButton(
             rect=pygame.Rect((500, 460), button_size),
             container=self,
             text="level 2",
-            level_map=lvl_2.level_map
+            level_map=load_level("lvl_2.txt")
         )
         self.lvl_3_button = LevelSelectButton(
             rect=pygame.Rect((900, 460), button_size),
             container=self,
             text="level 3",
-            level_map=lvl_3.level_map
+            level_map=load_level("lvl_3.txt")
         )
         self.level_buttons = [self.lvl_1_button, self.lvl_2_button,
                               self.lvl_3_button]

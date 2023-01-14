@@ -1,6 +1,6 @@
+"""Contain useful global functions"""
 import os
 import sys
-
 import pygame
 import yaml
 
@@ -22,7 +22,6 @@ def load_image(name, colorkey=None):
 
 def load_level(name):
     fullname = os.path.join('levels', name)
-    level_map = []
     with open(fullname) as data:
         level_map = data.readlines()
     return level_map

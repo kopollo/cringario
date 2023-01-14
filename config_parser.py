@@ -1,3 +1,4 @@
+"""Contain initialization of all global variables and images"""
 import pygame
 from cringario_util import load_image, read_config
 

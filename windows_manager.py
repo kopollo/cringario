@@ -1,3 +1,4 @@
+"""Contain window classes and their manager."""
 import pygame
 import pygame_gui
 from pygame_gui.elements import UIWindow, UIButton
@@ -7,10 +8,6 @@ from cringario_util import load_image, read_config, load_level
 from config_parser import (
     screen_width, screen_height,
 )
-
-# from levels import (
-#     lvl_1, lvl_2, lvl_3
-# )
 
 config = read_config()["window_elements"]
 
@@ -29,7 +26,10 @@ gui_manager = pygame_gui.UIManager(
 
 
 class StartWindow(UIWindow):
+    """Start window with game mode chooser."""
+
     def __init__(self):
+        """Initialize buttons in window."""
         super().__init__(
             rect=pygame.Rect(*window_rect_coords),
             manager=gui_manager,
@@ -51,7 +51,10 @@ class StartWindow(UIWindow):
 
 
 class ScoreWindow(UIWindow):
+    """Window show player score after game."""
+
     def __init__(self):
+        """Initialize buttons in window."""
         super().__init__(
             rect=pygame.Rect(*window_rect_coords),
             manager=gui_manager,
@@ -86,7 +89,10 @@ class ScoreWindow(UIWindow):
 
 
 class LevelSelectWindow(UIWindow):
+    """Window with list of buttons to select level."""
+
     def __init__(self):
+        """Initialize buttons in window."""
         super().__init__(
             rect=pygame.Rect(*window_rect_coords),
             manager=gui_manager,
@@ -121,7 +127,10 @@ class LevelSelectWindow(UIWindow):
 
 
 class LevelSelectButton(UIButton):
+    """Button for LevelSelectWindow that contain level map."""
+
     def __init__(self, container, rect, text, level_map):
+        """Initialize button."""
         super().__init__(
             relative_rect=rect,
             text=text,
@@ -132,7 +141,10 @@ class LevelSelectButton(UIButton):
 
 
 class WindowManager:
+    """Unite all windows in one place."""
+
     def __init__(self):
+        """Initialize windows."""
         self.start_window = StartWindow()
         self.score_window = ScoreWindow()
         self.level_select_window = LevelSelectWindow()

@@ -9,10 +9,10 @@ from cringario_util import terminate
 from config_parser import timer, screen_size
 from game_mode import SingleplayerGameMode, MultiplayerGameMode
 from windows_manager import (
-    start_window, single_play_button,
-    competitive_play_button, back_button, gui_manager, score_window,
-    select_lvl_window,
-    lvl_1_button, lvl_2_button, lvl_3_button
+    # back_button, , score_window,
+    gui_manager, window_manager,
+    # select_lvl_window, StartWindow,
+    # lvl_1_button, lvl_2_button, lvl_3_button,
 )
 
 
@@ -25,6 +25,8 @@ class GameManager:
         self.game_mode = None
         self.is_game_started = False
 
+        # self.start_window = StartWindow()
+
     def _game_cycle(self):
         running = True
         while running:
@@ -33,29 +35,25 @@ class GameManager:
                     terminate()
                 if event.type == pygame.USEREVENT:
                     if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
-                        if event.ui_element == single_play_button:
-                            start_window.hide()
-                            select_lvl_window.show()
+                        if (event.ui_element ==
+                                window_manager.start_window.single_play_button):
+                            window_manager.start_window.hide()
+                            window_manager.level_select_window.show()
                             self.game_mode = 'singleplayer'
-                        if event.ui_element == competitive_play_button:
-                            start_window.hide()
-                            select_lvl_window.show()
+                        if (event.ui_element ==
+                                window_manager.start_window.competitive_play_button):
+                            window_manager.start_window.hide()
+                            window_manager.level_select_window.show()
                             self.game_mode = 'multiplayer'
-                        if event.ui_element == back_button:
-                            score_window.hide()
-                            start_window.show()
-                        if event.ui_element == lvl_1_button:
-                            self.level_map = lvl_1.level_map
-                            select_lvl_window.hide()
-                            self.is_game_started = True
-                        if event.ui_element == lvl_2_button:
-                            self.level_map = lvl_2.level_map
-                            select_lvl_window.hide()
-                            self.is_game_started = True
-                        if event.ui_element == lvl_3_button:
-                            self.level_map = lvl_3.level_map
-                            select_lvl_window.hide()
-                            self.is_game_started = True
+                        if (event.ui_element ==
+                                window_manager.score_window.back_button):
+                            window_manager.score_window.hide()
+                            window_manager.start_window.show()
+                        for level in window_manager.level_select_window.level_buttons:
+                            if event.ui_element == level:
+                                self.level_map = level.level_map
+                                window_manager.level_select_window.hide()
+                                self.is_game_started = True
 
                 gui_manager.process_events(event)
             self.screen.fill('#123456')
@@ -67,7 +65,7 @@ class GameManager:
                 if self.game.is_game_over():
                     self.game = None
                     self.is_game_started = False
-                    score_window.show()
+                    window_manager.score_window.show()
             pygame.display.flip()
 
     def draw_gui(self):

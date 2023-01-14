@@ -9,8 +9,7 @@ from config_parser import (
     player_size,
 )
 from windows_manager import (
-    first_player_result_label,
-    second_player_result_label
+    window_manager,
 )
 
 controller1 = {
@@ -78,7 +77,7 @@ class SingleplayerGameMode(BaseGameMode):
             return True
 
     def set_result_view(self):
-        first_player_result_label.set_text(
+        window_manager.score_window.first_player_result_label.set_text(
             f"FIRST PLAYER SCORE: {self.player_hero.score}\n"
         )
 
@@ -128,12 +127,10 @@ class MultiplayerGameMode(BaseGameMode):
             return True
 
     def set_result_view(self):
-
-        first_player_result_label.set_text(
+        window_manager.score_window.first_player_result_label.set_text(
             f"FIRST PLAYER SCORE: {self.first_player_hero.score}\n"
-
         )
-        second_player_result_label.set_text(
+        window_manager.score_window.second_player_result_label.set_text(
             f"FIRST PLAYER SCORE: {self.second_player_hero.score}\n"
         )
         # second_player_result_label.set_text("uuuu")

@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 import pygame
 
 from drawable import DrawWithSprite
-from cringario_util import load_image
 
 
 class BaseBonus(ABC, pygame.sprite.Sprite):

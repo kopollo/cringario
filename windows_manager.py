@@ -2,7 +2,7 @@ import pygame
 import pygame_gui
 from pygame_gui.elements import UIWindow, UIButton
 
-from cringario_util import load_image, terminate, read_config
+from cringario_util import load_image, read_config
 
 from config_parser import (
     screen_width, screen_height,

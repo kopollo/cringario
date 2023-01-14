@@ -1,3 +1,4 @@
+"""Contain game modes classes"""
 from abc import ABC, abstractmethod
 
 import pygame
@@ -5,7 +6,7 @@ import pygame
 from level_init import Level
 from player import Hero
 from config_parser import (
-    screen_width, screen_height, timer, platform_size,
+    screen_width, screen_height, platform_size,
     player_size,
 )
 from windows_manager import (

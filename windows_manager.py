@@ -78,7 +78,10 @@ class ScoreWindow(UIWindow):
             manager=gui_manager,
             container=self,
         )
-        score_window_image = load_image('score.png')
+        score_window_image = pygame.transform.scale(
+            load_image('score_fon2.png'),
+            (window_width, window_height),
+        )
         self.image = score_window_image
 
 
@@ -133,6 +136,9 @@ class WindowManager:
         self.start_window = StartWindow()
         self.score_window = ScoreWindow()
         self.level_select_window = LevelSelectWindow()
+
+    # def btn_pressed_checker(self, event):
+    #     pass
 
 
 window_manager = WindowManager()

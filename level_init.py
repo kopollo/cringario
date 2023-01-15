@@ -1,3 +1,4 @@
+"""Contain Level implementation."""
 import pygame
 
 from collision import Collision
@@ -15,9 +16,21 @@ from config_parser import (
 
 
 class Level:
+    """Create all sprite objects and update them."""
+
     def __init__(self, level_map, surface,
                  platform_size, screen_width,
                  screen_height, player):
+        """
+        Initialize level.
+
+        :param level_map: array with level info
+        :param surface: display where we draw
+        :param platform_size: platform size
+        :param screen_width: screen width
+        :param screen_height: screen height
+        :param player: player in game field
+        """
         self.world_shift_x = 0
         self.total_shift_x = 0
         self.display = surface
@@ -50,6 +63,11 @@ class Level:
         self.enemy_collision = Collision(self.enemies, self.platforms)
 
     def setup_level(self, level_map):
+        """
+        Load game field using level map.
+
+        :param level_map: array with special simbols
+        """
         platform_size = self.platform_size
         for row_idx, row in enumerate(level_map):
             for col_idx, cell in enumerate(row):
@@ -102,6 +120,7 @@ class Level:
                     self.player_sprite.add(self.player)
 
     def scroll_x(self):
+        """Scroll level to imitate camera."""
         world_shift_speed = 8
         player = self.player
         player_x = player.rect.centerx
@@ -121,6 +140,7 @@ class Level:
             self.world_shift_x = 0
 
     def check_bonuses_collision(self):
+        """Check collision player with bonuses."""
         player = self.player
         for bonus in self.bonuses:
             if bonus.rect.colliderect(player.rect):
@@ -128,12 +148,14 @@ class Level:
                 bonus.add_bonus(player)
 
     def check_enemies_collision(self):
+        """Check collision player with enemies."""
         player = self.player
         for enemy in self.enemies:
             if enemy.rect.colliderect(player.rect):
                 player.get_damaged(enemy)
 
     def check_player_state(self):
+        """Check is player dead and need to respawn."""
         player = self.player
         if player.is_dead() or player.rect.centery > self.screen_height:
             player.hp = player.HERO_HEALTH
@@ -142,12 +164,18 @@ class Level:
             self.total_shift_x = 0
 
     def check_is_game_over(self):
+        """
+        Check is player took final cup.
+
+        :return: True or False
+        """
         player = self.player
         cup = self.cup_sprite.sprite
         if cup.rect.colliderect(player.rect):
             return True
 
     def run(self):
+        """Draw all sprite groups and update them."""
         self.scroll_x()
 
         self.game_fon.draw(self.display)

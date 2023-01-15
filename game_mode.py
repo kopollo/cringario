@@ -1,4 +1,4 @@
-"""Contain game modes classes"""
+"""Contain game modes classes."""
 from abc import ABC, abstractmethod
 
 import pygame
@@ -26,15 +26,24 @@ controller2 = {
 
 
 class BaseGameMode(ABC):
+    """Interface for game modes."""
+
     @abstractmethod
     def draw(self):
+        """Draw level in screen."""
         pass
 
     @abstractmethod
     def is_game_over(self):
+        """
+        Check is game over.
+
+        :return: True or False
+        """
         pass
 
     def create_level(self, surface, player_sprite, level_map, height_coef):
+        """Create Level class."""
         level = Level(
             level_map,
             surface,
@@ -47,11 +56,20 @@ class BaseGameMode(ABC):
 
     @abstractmethod
     def set_result_view(self):
+        """Draw score in score window."""
         pass
+
+    def run_level(self, level):
+        """Run level."""
+        if not level.check_is_game_over():
+            level.run()
 
 
 class SingleplayerGameMode(BaseGameMode):
+    """Game mode with one level and one player."""
+
     def __init__(self, screen, level_map):
+        """Initialize singleplayer mode."""
         super().__init__()
         self.screen = screen
         self.time_delta = 0
@@ -68,23 +86,33 @@ class SingleplayerGameMode(BaseGameMode):
             height_coef=1)
 
     def draw(self):
+        """Draw level in screen."""
         self.screen.blit(self._game_field, (0, 0))
         self.level.run()
         pygame.display.flip()
 
     def is_game_over(self):
+        """
+        Check is game over.
+
+        :return: True or False
+        """
         if self.level.check_is_game_over():
             self.set_result_view()
             return True
 
     def set_result_view(self):
+        """Draw score in score window."""
         window_manager.score_window.first_player_result_label.set_text(
             f"FIRST PLAYER SCORE: {self.player_hero.score}\n"
         )
 
 
 class MultiplayerGameMode(BaseGameMode):
+    """Game mode with two levels and two players."""
+
     def __init__(self, screen, level_map):
+        """Initialize multiplayer mode."""
         self.screen = screen
         self.level_map = level_map
         self.is_over = False
@@ -111,23 +139,26 @@ class MultiplayerGameMode(BaseGameMode):
             height_coef=2)
 
     def draw(self):
+        """Draw level in screen."""
         self.screen.blit(self.first_player_game_field, (0, 0))
         self.screen.blit(self.second_player_game_field, (0, screen_height // 2))
-        self.draw_level(self.level1)
-        self.draw_level(self.level2)
+        self.run_level(self.level1)
+        self.run_level(self.level2)
         pygame.display.flip()
 
-    def draw_level(self, level):
-        if not level.check_is_game_over():
-            level.run()
-
     def is_game_over(self):
+        """
+        Check is game over.
+
+        :return: True or False
+        """
         if (self.level1.check_is_game_over() and
                 self.level2.check_is_game_over()):
             self.set_result_view()
             return True
 
     def set_result_view(self):
+        """Draw score in score window."""
         window_manager.score_window.first_player_result_label.set_text(
             f"FIRST PLAYER SCORE: {self.first_player_hero.score}\n"
         )

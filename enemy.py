@@ -1,3 +1,4 @@
+"""Contain Enemy."""
 import pygame
 
 from drawable import DrawWithSprite
@@ -6,11 +7,14 @@ from animation_manager import get_animation_files
 
 
 class Enemy(DrawWithSprite, BaseMovingCreature):
+    """Enemy. Can damage player."""
+
     ENEMY_SPEED = 5
     ENEMY_JUMP_SPEED = 0
     ENEMY_DAMAGE = 1
 
     def __init__(self, pos, size, image):
+        """Initialize Enemy."""
         self.speed = Enemy.ENEMY_SPEED
         self.jump_speed = Enemy.ENEMY_JUMP_SPEED
         self.gravity = Enemy.BASE_GRAVITY
@@ -30,6 +34,7 @@ class Enemy(DrawWithSprite, BaseMovingCreature):
         super().__init__(pos, size, self.image)
 
     def download_enemy_asset(self):
+        """Download enemy asset."""
         hero_path = 'textures/enemy/'
         for animation in self.animations.keys():
             path_animation = hero_path + animation
@@ -38,6 +43,7 @@ class Enemy(DrawWithSprite, BaseMovingCreature):
                 self.size)
 
     def animate(self):
+        """Animate enemy."""
         animation = self.animations[self.status]
 
         self.frame_index += self.animation_speed
@@ -50,12 +56,14 @@ class Enemy(DrawWithSprite, BaseMovingCreature):
             self.image = pygame.transform.flip(image, True, False)
 
     def get_direction_x(self):
+        """Get enemy x direction."""
         if self.direction.x == 1.0:
             self.face_right = False
         else:
             self.face_right = True
 
     def update(self, shift_x):
+        """Update player position and draw it."""
         self.rect.x += shift_x
         self.get_direction_x()
         self.animate()

@@ -1,4 +1,4 @@
-"""Contain game manager"""
+"""Contain game manager."""
 import pygame
 import pygame_gui
 
@@ -12,7 +12,14 @@ from windows_manager import (
 
 
 class GameManager:
+    """Class controls game mode initialization, game cycle, windows."""
+
     def __init__(self, screen):
+        """
+        Initialize main display.
+
+        :param screen: screen where game is going.
+        """
         self.screen = screen
         self.level_map = None
         self.game = None
@@ -20,6 +27,7 @@ class GameManager:
         self.is_game_started = False
 
     def _game_cycle(self):
+        """Run game cycle.Draw gui, level."""
         running = True
         while running:
             for event in pygame.event.get():
@@ -33,11 +41,13 @@ class GameManager:
             pygame.display.flip()
 
     def draw_gui(self):
+        """Draw gui by gui_manager."""
         time_delta = timer.tick(60) / 1000
         gui_manager.update(time_delta)
         gui_manager.draw_ui(self.screen)
 
     def create_game(self):
+        """Create a game mode depending on the pressed key."""
         if self.game_mode == 'singleplayer':
             self.game = SingleplayerGameMode(
                 self.screen,
@@ -50,6 +60,7 @@ class GameManager:
             )
 
     def check_buttons(self, event):
+        """Check pressed buttons and run their logic."""
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if (event.ui_element ==
@@ -74,6 +85,7 @@ class GameManager:
                         self.is_game_started = True
 
     def run_game(self):
+        """Control game existence."""
         if self.is_game_started:
             if not self.game:
                 self.create_game()
@@ -84,5 +96,5 @@ class GameManager:
                 window_manager.score_window.show()
 
     def run(self):
+        """Run game cycle."""
         self._game_cycle()
-

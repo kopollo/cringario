@@ -15,6 +15,8 @@ button_size = config["button_size"]
 border = config["border"]
 label_size = config["label_size"]
 
+
+
 window_height = screen_height + 2 * border
 window_width = screen_width + 2 * border
 center = window_width // 2
@@ -82,7 +84,7 @@ class ScoreWindow(UIWindow):
             container=self,
         )
         score_window_image = pygame.transform.scale(
-            load_image('secret.png'),
+            load_image('wow.png'),
             (window_width, window_height),
         )
         self.image = score_window_image

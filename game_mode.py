@@ -163,6 +163,6 @@ class MultiplayerGameMode(BaseGameMode):
             f"FIRST PLAYER SCORE: {self.first_player_hero.score}\n"
         )
         window_manager.score_window.second_player_result_label.set_text(
-            f"FIRST PLAYER SCORE: {self.second_player_hero.score}\n"
+            f"SECOND PLAYER SCORE: {self.second_player_hero.score}\n"
         )
         # second_player_result_label.set_text("uuuu")

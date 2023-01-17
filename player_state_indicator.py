@@ -1,7 +1,6 @@
 """Contains PlayerStateIndicator."""
 from drawable import DrawWithText
 import pygame
-from config_parser import timer
 
 
 class PlayerStateIndicator:
@@ -21,6 +20,7 @@ class PlayerStateIndicator:
         self.width = width
         self.height = height
         self.sprite_group = pygame.sprite.Group()
+        self.start_ticks = pygame.time.get_ticks()
         self.seconds = 0
 
     def run(self):
@@ -30,7 +30,7 @@ class PlayerStateIndicator:
 
     def _update_info(self):
         """Update info which we wanted to show."""
-        self.seconds = (pygame.time.get_ticks() - timer.get_time()) / 1000
+        self.seconds = (pygame.time.get_ticks() - self.start_ticks) / 1000
         data = [
             f'HP : {self.player.hp}',
             f'SCORE : {self.player.score}',

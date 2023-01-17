@@ -82,7 +82,7 @@ class ScoreWindow(UIWindow):
             container=self,
         )
         score_window_image = pygame.transform.scale(
-            load_image('score_fon2.png'),
+            load_image('secret.png'),
             (window_width, window_height),
         )
         self.image = score_window_image
@@ -100,30 +100,20 @@ class LevelSelectWindow(UIWindow):
         )
 
         select_lvl_image = pygame.transform.scale(
-            load_image('finish_fon.png'),
+            load_image('sfon.png'),
             (window_width, window_height),
         )
         self.image = select_lvl_image
-        self.lvl_1_button = LevelSelectButton(
-            rect=pygame.Rect((100, 460), button_size),
-            container=self,
-            text="level 1",
-            level_map=load_level("lvl_1.txt")
-        )
-        self.lvl_2_button = LevelSelectButton(
-            rect=pygame.Rect((500, 460), button_size),
-            container=self,
-            text="level 2",
-            level_map=load_level("lvl_2.txt")
-        )
-        self.lvl_3_button = LevelSelectButton(
-            rect=pygame.Rect((900, 460), button_size),
-            container=self,
-            text="level 3",
-            level_map=load_level("lvl_3.txt")
-        )
-        self.level_buttons = [self.lvl_1_button, self.lvl_2_button,
-                              self.lvl_3_button]
+        all_lvl = ["lvl_1.txt", "lvl_2.txt", "lvl_3.txt"]
+        self.level_buttons = []
+        for i in range(3):
+            btn = LevelSelectButton(
+                rect=pygame.Rect((100 + 400 * i, 460), button_size),
+                container=self,
+                text=f"level {i + 1}",
+                level_map=load_level(all_lvl[i])
+            )
+            self.level_buttons.append(btn)
 
 
 class LevelSelectButton(UIButton):
@@ -149,21 +139,5 @@ class WindowManager:
         self.score_window = ScoreWindow()
         self.level_select_window = LevelSelectWindow()
 
-    # def btn_pressed_checker(self, event):
-    #     pass
-
 
 window_manager = WindowManager()
-# def get_pressed_button(self, event):
-#     if event.type == pygame.QUIT:
-#         terminate()
-#
-#         # return 'competitive'
-#
-#     gui_manager.process_events(event)
-
-# def draw(self):
-#     time_delta = timer.tick(60) / 1000
-#     gui_manager.update(time_delta)
-#     gui_manager.draw_ui(self.screen)
-#     pygame.display.flip()

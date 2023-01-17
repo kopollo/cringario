@@ -1,7 +1,13 @@
+"""Contain pygame sprite covers."""
 import pygame
 
 
-class DrawWithColor(pygame.sprite.Sprite):
+class BaseSprite(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+
+class DrawWithColor(BaseSprite):
     def __init__(self, pos, size, color='grey'):
         super().__init__()
         self.image = pygame.Surface((size, size))
@@ -9,7 +15,7 @@ class DrawWithColor(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
 
-class DrawWithSprite(pygame.sprite.Sprite):
+class DrawWithSprite(BaseSprite):
     def __init__(self, pos, size, image):
         super().__init__()
         width, height = size
@@ -19,7 +25,7 @@ class DrawWithSprite(pygame.sprite.Sprite):
         self.rect.topleft = pos
 
 
-class DrawWithText(pygame.sprite.Sprite):
+class DrawWithText(BaseSprite):
     def __init__(self, pos, text):
         super().__init__()
         font = pygame.font.Font(None, 40)

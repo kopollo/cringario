@@ -35,7 +35,6 @@ class Level:
         self.total_shift_x = 0
         self.display = surface
         self.platforms = pygame.sprite.Group()
-        self.ground = pygame.sprite.Group()
         self.player = player
 
         self.platform_size = platform_size
@@ -195,9 +194,6 @@ class Level:
 
         self.platforms.update(self.world_shift_x)
         self.platforms.draw(self.display)
-
-        self.ground.update(self.world_shift_x)
-        self.ground.draw(self.display)
 
         self.player_collision.apply()
         self.enemy_collision.apply()

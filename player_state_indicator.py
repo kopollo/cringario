@@ -25,10 +25,10 @@ class PlayerStateIndicator:
 
     def run(self):
         """Draw player info."""
-        self.upd()
+        self._update_info()
         self.sprite_group.draw(self.display)
 
-    def upd(self):
+    def _update_info(self):
         """Update info which we wanted to show."""
         self.seconds = (pygame.time.get_ticks() - timer.get_time()) / 1000
         data = [

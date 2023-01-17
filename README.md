@@ -7,18 +7,35 @@
 - Bonus system
 - Amazing textures and sprites
 - Time, score, health indicators
-- Result table with competition mode results
- 
-## Test picture how game may be seen
- ![image](https://user-images.githubusercontent.com/114457052/205551815-3015febb-5181-4355-9944-bc60fafce00a.png)
+
+## Dependencies
+- pygame
+- pygame_gui
+- PyYAML
+
+## Codestyle linters
+The project has been checked with the following tools:
+- flake8
+- mypy
+- pydocstyle
+## How to start
+- By entrance point - main.py
+- By .exe file which you can find in "TODO"
+
+## Game interface
+### - start window
+![image](https://user-images.githubusercontent.com/114457052/213004696-c38f7462-11b3-4718-a9fb-08fe1053e503.png)
+
+### - level choose window
+![image](https://user-images.githubusercontent.com/114457052/213004781-e02f7140-19ee-4b96-85fb-1c3e91b3235e.png)
+
+### - singleplayer mode
+![image](https://user-images.githubusercontent.com/114457052/213005095-cda87439-5939-4986-808e-e9833a8fb6bd.png)
+
+### - multiplayer mode
+![image](https://user-images.githubusercontent.com/114457052/213005649-807363cf-c778-4951-a11d-e7ce781c3e0f.png)
 
 
- ![image](https://user-images.githubusercontent.com/110305715/206725587-36340b82-b373-4d50-9fc1-21ba93555f4a.png)
+### - score window 
+![image](https://user-images.githubusercontent.com/114457052/213004393-edebdd74-c232-4c18-ba69-ba38881aeaf1.png)
 
- ![image](https://user-images.githubusercontent.com/110305715/206725663-c93ef988-a252-4d94-81c4-f3a0d8ee6467.png)
-
-##LVL 1
- ![image](https://user-images.githubusercontent.com/110305715/206726839-803c2858-2091-4121-b5ed-2a8f0dcdb16f.png)
- ![image](https://user-images.githubusercontent.com/110305715/206726932-dca5f7fb-e46d-4c89-b88f-884ce05fc036.png)
-
-  

@@ -1,8 +1,10 @@
+"""Animation manager."""
 import os
 import pygame
 
 
 def get_animation_files(path, size):
+    """Get animation files."""
     surface_list = []
 
     for _, __, img_files in os.walk(path):

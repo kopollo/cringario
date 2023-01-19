@@ -8,6 +8,7 @@ from ground import Ground
 from bonuses import HealBonus, SimpleBonus
 from player_state_indicator import PlayerStateIndicator
 from game_over_object import WinObject
+from wind import Wind
 
 from config_parser import (
     heal_bonus_image, simple_bonus_image, game_fon,

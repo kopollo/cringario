@@ -1,7 +1,9 @@
 """Contain window classes and their manager."""
 import pygame
 import pygame_gui
+from pygame_gui import UI_CONFIRMATION_DIALOG_CONFIRMED
 from pygame_gui.elements import UIWindow, UIButton
+from pygame_gui.windows import *
 
 from cringario_util import load_image, read_config, load_level
 
@@ -14,8 +16,6 @@ config = read_config()["window_elements"]
 button_size = config["button_size"]
 border = config["border"]
 label_size = config["label_size"]
-
-
 
 window_height = screen_height + 2 * border
 window_width = screen_width + 2 * border
@@ -118,6 +118,19 @@ class LevelSelectWindow(UIWindow):
             self.level_buttons.append(btn)
 
 
+class PauseWindow(UIConfirmationDialog):
+    """Window with list of buttons to select level."""
+
+    def __init__(self):
+        """Initialize buttons in window."""
+        super().__init__(
+            action_long_desc="ARE YOU REALLY WANT TO EXIT?",
+            rect=pygame.Rect((200, 100), (500, 300)),
+            manager=gui_manager,
+            visible=False,
+        )
+
+
 class LevelSelectButton(UIButton):
     """Button for LevelSelectWindow that contain level map."""
 
@@ -140,6 +153,12 @@ class WindowManager:
         self.start_window = StartWindow()
         self.score_window = ScoreWindow()
         self.level_select_window = LevelSelectWindow()
+        self.pause_window = PauseWindow()
+
+    def pause_game(self):
+        if not self.pause_window.visible:
+            self.pause_window = PauseWindow()
+        self.pause_window.show()
 
 
 window_manager = WindowManager()

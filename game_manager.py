@@ -26,6 +26,8 @@ class GameManager:
         self.game_mode = None
         self.is_game_started = False
 
+        self.esc_count = 0
+
     def _game_cycle(self):
         """Run game cycle.Draw gui, level."""
         running = True
@@ -33,11 +35,27 @@ class GameManager:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     terminate()
+                if event.type == pygame.KEYDOWN:
+                    if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+                        self.esc_count += 1
+
                 self.check_buttons(event)
                 gui_manager.process_events(event)
             self.screen.fill('#123456')
-            self.draw_gui()
+            if self.esc_count % 2 == 1:
+                self.game.is_freeze = True
+                window_manager.pause_game()
+            else:
+                if self.game is not None:
+                    self.game.is_freeze = False
+                    window_manager.pause_window.hide()
+
+            #     window_manager.pause_window.show()
             self.run_game()
+            self.draw_gui()
+            # if not window_manager.pause_window.visible:
+            # self.is_game_started = True
+
             pygame.display.flip()
 
     def draw_gui(self):
@@ -63,6 +81,19 @@ class GameManager:
         """Check pressed buttons and run their logic."""
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                if (event.ui_element ==
+                        window_manager.pause_window.cancel_button):
+                    window_manager.pause_window.kill()
+                    self.esc_count += 1
+                if (event.ui_element ==
+                        window_manager.pause_window.confirm_button):
+                    self.esc_count += 1
+                    self.__init__(self.screen)
+                    window_manager.start_window.show()
+                if (event.ui_element ==
+                        window_manager.pause_window.close_window_button):
+                    window_manager.pause_window.kill()
+                    self.esc_count += 1
                 if (event.ui_element ==
                         window_manager.start_window.single_play_button):
                     window_manager.start_window.hide()

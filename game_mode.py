@@ -85,11 +85,14 @@ class SingleplayerGameMode(BaseGameMode):
             self.level_map,
             height_coef=1)
 
+        self.is_freeze = False
+
     def draw(self):
         """Draw level in screen."""
         self.screen.blit(self._game_field, (0, 0))
-        self.level.run()
-        pygame.display.flip()
+        if not self.is_freeze:
+            self.level.run()
+            pygame.display.flip()
 
     def is_game_over(self):
         """

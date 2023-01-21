@@ -84,7 +84,6 @@ class SingleplayerGameMode(BaseGameMode):
             self.player_hero,
             self.level_map,
             height_coef=1)
-
         self.is_freeze = False
 
     def draw(self):
@@ -140,14 +139,16 @@ class MultiplayerGameMode(BaseGameMode):
             self.second_player_hero,
             self.level_map,
             height_coef=2)
+        self.is_freeze = False
 
     def draw(self):
         """Draw level in screen."""
         self.screen.blit(self.first_player_game_field, (0, 0))
         self.screen.blit(self.second_player_game_field, (0, screen_height // 2))
-        self.run_level(self.level1)
-        self.run_level(self.level2)
-        pygame.display.flip()
+        if not self.is_freeze:
+            self.run_level(self.level1)
+            self.run_level(self.level2)
+            pygame.display.flip()
 
     def is_game_over(self):
         """

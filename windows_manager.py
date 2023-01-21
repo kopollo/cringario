@@ -1,9 +1,8 @@
 """Contain window classes and their manager."""
 import pygame
-import pygame_gui
-from pygame_gui import UI_CONFIRMATION_DIALOG_CONFIRMED
-from pygame_gui.elements import UIWindow, UIButton
-from pygame_gui.windows import *
+import pygame_gui  # type: ignore
+from pygame_gui.elements import UIWindow, UIButton  # type: ignore
+from pygame_gui.windows import UIConfirmationDialog  # type: ignore
 
 from cringario_util import load_image, read_config, load_level
 
@@ -156,9 +155,14 @@ class WindowManager:
         self.pause_window = PauseWindow()
 
     def pause_game(self):
+        """Show pause window."""
         if not self.pause_window.visible:
             self.pause_window = PauseWindow()
         self.pause_window.show()
+
+    def unpause_game(self):
+        """Hide pause window."""
+        self.pause_window.hide()
 
 
 window_manager = WindowManager()

@@ -1,8 +1,6 @@
 """Contain BaseBonus and its implementations."""
 from abc import ABC, abstractmethod
 
-import pygame
-
 from drawable import DrawWithSprite
 
 

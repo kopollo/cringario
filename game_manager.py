@@ -1,6 +1,6 @@
 """Contain game manager."""
 import pygame
-import pygame_gui
+import pygame_gui  # type: ignore
 
 from cringario_util import terminate
 
@@ -35,27 +35,22 @@ class GameManager:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     terminate()
-                if event.type == pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN and self.is_game_started:
                     if pygame.key.get_pressed()[pygame.K_ESCAPE]:
                         self.esc_count += 1
 
                 self.check_buttons(event)
                 gui_manager.process_events(event)
-            self.screen.fill('#123456')
             if self.esc_count % 2 == 1:
                 self.game.is_freeze = True
                 window_manager.pause_game()
             else:
                 if self.game is not None:
                     self.game.is_freeze = False
-                    window_manager.pause_window.hide()
+                    window_manager.unpause_game()
 
-            #     window_manager.pause_window.show()
             self.run_game()
             self.draw_gui()
-            # if not window_manager.pause_window.visible:
-            # self.is_game_started = True
-
             pygame.display.flip()
 
     def draw_gui(self):

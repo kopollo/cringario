@@ -1,4 +1,5 @@
 # cringario
+Platfromer game based on pygame with interesting fratures!
 ## Features
 - Two game modes
   - Singleplayer mode
@@ -20,7 +21,7 @@ The project has been checked with the following tools:
 - pydocstyle
 ## How to start
 - By entrance point - main.py
-- By .exe file which you can find in "TODO"
+- By .exe file which you can find in https://disk.yandex.ru/d/s17VjGwtc0MLDA
 
 ## Game interface
 ### - start window
@@ -34,7 +35,6 @@ The project has been checked with the following tools:
 
 ### - multiplayer mode
 ![image](https://user-images.githubusercontent.com/114457052/213005649-807363cf-c778-4951-a11d-e7ce781c3e0f.png)
-
 
 ### - score window 
 ![image](https://user-images.githubusercontent.com/114457052/213004393-edebdd74-c232-4c18-ba69-ba38881aeaf1.png)

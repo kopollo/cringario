@@ -1,5 +1,5 @@
 # cringario
-Platfromer game based on pygame with interesting fratures!
+Platfromer game based on pygame with interesting features!
 ## Features
 - Two game modes
   - Singleplayer mode

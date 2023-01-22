@@ -23,6 +23,10 @@ The project has been checked with the following tools:
 - By entrance point - main.py
 - By .exe file which you can find in https://disk.yandex.ru/d/s17VjGwtc0MLDA
 
+## Class diagram
+![class_diagram  MConverter eu](https://user-images.githubusercontent.com/114457052/213939150-da51d331-76f1-4517-b9df-50e0bfbfdd89.png)
+
+
 ## Game interface
 ### - start window
 ![image](https://user-images.githubusercontent.com/114457052/213004696-c38f7462-11b3-4718-a9fb-08fe1053e503.png)

@@ -71,13 +71,15 @@ class ScoreWindow(UIWindow):
         )
         label_width, label_height = label_size
         self.first_player_result_label = pygame_gui.elements.UILabel(
-            relative_rect=pygame.Rect((center - label_width, 260), label_size),
+            relative_rect=pygame.Rect(
+                (window_width // 2 - border, 400), label_size),
             text='',
             manager=gui_manager,
             container=self,
         )
         self.second_player_result_label = pygame_gui.elements.UILabel(
-            relative_rect=pygame.Rect((center - label_width, 360), label_size),
+            relative_rect=pygame.Rect(
+                (window_width // 2 - border, 500), label_size),
             text='',
             manager=gui_manager,
             container=self,
@@ -118,10 +120,10 @@ class LevelSelectWindow(UIWindow):
 
 
 class PauseWindow(UIConfirmationDialog):
-    """Window with list of buttons to select level."""
+    """Window that stops game and show exit dialog."""
 
     def __init__(self):
-        """Initialize buttons in window."""
+        """Initialize buttons and text in window."""
         super().__init__(
             action_long_desc="ARE YOU REALLY WANT TO EXIT?",
             rect=pygame.Rect((200, 100), (500, 300)),
